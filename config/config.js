@@ -3,7 +3,9 @@ var path = require('path'),
 
 var config = {
   root: rootPath,
-  port: 3000
+  port: 3000,
+  domain: 'http://localhost'
 };
+config.uri = config.domain + ':' + config.port;
 
 module.exports = config;
