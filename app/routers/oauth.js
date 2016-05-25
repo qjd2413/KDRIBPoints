@@ -23,7 +23,7 @@
         app.use('/oauth', router);
 
         router.get('/google_signin',
-            passport.authenticate('google', { scope: ['profile'] })
+            passport.authenticate('google', { scope: ['profile'], hd: 'kdrib.org' })
         );
 
         router.get('/google_callback',
