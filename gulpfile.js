@@ -10,15 +10,17 @@
     var stylish = require('jshint-stylish');
 
     //PATHS
-    var jsFiles = mainBowerFiles('**/*.js');
-    var appFiles = './public/app/**/*.js';
-    jsFiles.push(appFiles);
+    var bowerFiles = mainBowerFiles('**/*.js');
+    var angularFiles = './public/app/**/*.js';
+    var serverFiles = './app/**/.*.js';
+    var jsFiles = angularFiles.concat(serverFiles);
+    var appFiles = bowerFiles.concat(angularFiles);
     var cssFiles = './public/css/**/*.css';
 
     //inject script and link tags
     gulp.task('inject', ['hint'], function() {
         return gulp.src('public/index.html')
-          .pipe(inject(gulp.src(jsFiles),   //inject angular and bower js files
+          .pipe(inject(gulp.src(appFiles),   //inject angular and bower js files
               {relative: true}))            //only read filenames, not content
           .pipe(inject(gulp.src(cssFiles),
               {relative: true}))
@@ -27,7 +29,7 @@
 
     //run app files through jshint
     gulp.task('hint', function() {
-        return gulp.src(appFiles)
+        return gulp.src(jsFiles)
             .pipe(jshint())
             .pipe(jshint.reporter(stylish));
     });

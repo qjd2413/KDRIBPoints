@@ -2,16 +2,17 @@
 (function() {
     'use strict';
 
-    angular.module('nosql', [
-        'ui.router',
-    ])
-    .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
-        // Now set up the states
+    var KDRPoints = function($stateProvider, $urlRouterProvider) {
         $stateProvider
         .state('home', {
             url: '/'
         });
 
         $urlRouterProvider.otherwise('/');
-    }]);
+    };
+
+    angular.module('KDRPoints', [
+        'ui.router',
+    ])
+    .config(['$stateProvider', '$urlRouterProvider', KDRPoints]);
 })();
