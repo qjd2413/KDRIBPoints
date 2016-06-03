@@ -1,5 +1,5 @@
 
-var external_config = require('config');
+var external_config = require('./config');
 
 //DO NOT COMMIT YOUR CLIENT SECRET
 var config = {
