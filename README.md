@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/qjd2413/KDRIBPoints.png?label=ready&title=Ready)](https://waffle.io/qjd2413/KDRIBPoints)
 # KDRIB Points
 Points site for the Iota Beta chapter of Kappa Delta Rho
 
