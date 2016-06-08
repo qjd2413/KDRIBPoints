@@ -1,16 +1,42 @@
 # Requirements for KDR Points Site
 
+## Releases
+
+### Release 1 (6/24)
+
+#### High Level Goals
+
+- [Point System] (#points)
+- Brother list
+- Service Hours
+
+#### Lower Level Functionality Required
+
+- sign up (Google Oauth) (Quinn)
+- sign in (Google Oauth) (Quinn)
+- databases set up, brothers, service hours, points, etc (Dustin)
+- roles set up for chair positions
+- service hour submission
+- service hour acceptance
+- different types of service hours
+- profile page
+  - edit info, view important information
+
+#### Quinn's Ideas
+
+- table with references to amount of points needed, etc, so only change in one place
+
 ## Features
 
 Requirement Label | Description | Priority
 ----------------- | ----------- | --------
 [Point System] (#points)      | Ability to track points based on the system described | High
 Brother list      | View all brothers + all active brothers in order of pin | High
-Pledge Interface  | Allow pledges to sign up for their own events and track their own stuff | ??
 PNMs  | Submit information about PNMs | High
 Service Hours | Submit, approve, view, export service hours | High
 Dues Tracking | Able to track amount of dues owed, monitored by quaestor | High
 Study Hours | Submit, approve, view, export study hours | High
+Pledge Interface  | Allow pledges to sign up for their own events and track their own stuff | Medium
 National Minutes Submission | Allow praetor to take minutes on site and export to doc | Medium
 Meeting Attendance | Allow praetor to take attendance on site, incorporate into both minutes and points | Medium
 Chores | View available chores, mark off chores when complete | Medium
