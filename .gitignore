@@ -32,5 +32,9 @@ node_modules
 # Optional REPL history
 .node_repl_history
 
+# .DS_Store
+.DS_Store
+
 public/bower_components
 config/google_config.js
+config/mysql_config.js
