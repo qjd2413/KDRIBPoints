@@ -21,27 +21,37 @@ Error | Solution
 
 ## File structure
 ```
-- app                           # server files
------ routers                   #
----------- oauth.js             # google oauth logic and routes
-- config                        #
------ config.js                 # main configuration file
------ google_config.js          # populated template
------ template_google_config.js # empty template for google oauth
-- docs                          #
------ git_standards.md          # outline for git process
-- public                        # files displayed to client
------ app                       # angular files (templates, controllers, etc)
----------- app.module.js        # angular router
------ css                       #
----------- style.css            # main css file
------ index.html                # main page
-- .bowerrc                      #
-- .gitignore                    #
-- .jshintrc                     #
-- bower.json                    # bower dependencies
-- gulpfile.js                   # tasks run to prepare and start server
-- index.js                      # main server file
-- package.json                  # npm dependencies
-- README.md                     #
+KDRIBPoints
+├── .bowerrc
+├── .gitignore
+├── .jshintrc
+├── README.md
+├── app
+│   └── routers
+│       └── oauth.js
+├── bower.json
+├── config
+│   ├── config.js
+│   ├── google_config.js
+│   ├── mysql_config.js
+│   ├── template_google_config.js
+│   └── template_mysql_config.js
+├── database
+│   ├── setup_database.js
+│   └── start_database.js
+├── docs
+│   ├── git_standards.md
+│   ├── mysql_installer.md
+│   └── points-requirements.md
+├── gulpfile.js
+├── index.js
+├── models
+│   └── brother.js
+├── package.json
+└── public
+    ├── app
+    │   └── app.module.js
+    ├── css
+    │   └── style.css
+    └── index.html
 ```
