@@ -2,10 +2,13 @@
   'use strict';
 
   var express = require('express');
-  var config = require('./config/config');
-  var glob = require('glob');
   var bodyParser = require('body-parser');
   var compress = require('compression');
+  var glob = require('glob');
+
+  var config = require('./config/config');
+
+  require('./database/start_database')();
 
   var app = express();
 
