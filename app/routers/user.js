@@ -18,7 +18,7 @@
         },
         function(accessToken, refreshToken, profile, cb) {
             console.log(profile.displayName + ' has signed in.');
-            db.create(profile.id, profile.name, profile. emails);
+            db.login(profile.id, profile.name, profile. emails);
             return cb(null, profile.id);
         })
     );
@@ -32,12 +32,17 @@
     });
 
     module.exports = function(app) {
-        app.use('/oauth', router);
+        app.use('/user', router);
 
-        router.get('/google_signin',
-          passport.authenticate('google', 
-            { scope: ['profile', 'email'], hd: 'kdrib.org' })
-        );
+        router.get('/sign_in', function(req, res) {
+          if(!req.user) {
+            passport.authenticate('google', 
+              { scope: ['profile', 'email'], hd: 'kdrib.org' })(req,res)
+          } else {
+            console.log('User ' + req.user + ' already logged in.');
+            res.redirect('/'); 
+          }
+        });
 
         router.get('/google_callback',
           passport.authenticate('google', { failureRedirect: '/error' }),
@@ -46,8 +51,11 @@
           }
         );
 
-        router.get('/sequelize', function(req, res) {
-          console.log(req.user);
+        router.get('/logout', function(req, res) {
+          if(req.user) {
+            console.log('User ' + req.user + ' has logged out.');
+            req.logout();
+          }
           res.redirect('/');
         });
     };

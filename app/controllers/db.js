@@ -6,7 +6,7 @@ module.exports = {
   print: function() {
     console.log(models.Brother); 
   },
-  create: function(id, name, email) {
+  login: function(id, name, email) {
     Brother.findOrCreate({ 
       where: {id: id},
       defaults: {
@@ -14,9 +14,7 @@ module.exports = {
         lastName: name.familyName,
         email: email[0].value
       }
-    }).then(function(brother) {
-
-    });
+    }).then(function() {});
   }
 }
 
