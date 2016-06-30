@@ -2,15 +2,26 @@
   'use strict';
 
   var express = require('express');
+  var expressSession = require('express-session');
   var bodyParser = require('body-parser');
   var compress = require('compression');
   var glob = require('glob');
+  var passport = require('passport');
 
   var config = require('./config/config');
 
   require('./database/start_database')();
 
   var app = express();
+
+  app.use(expressSession(
+        { secret: 'no thanks', 
+          resave: true, 
+          saveUninitialized: true
+        }
+  ));
+  app.use(passport.initialize());
+  app.use(passport.session());
 
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({
