@@ -5,10 +5,12 @@
     var KDRPoints = function($stateProvider, $urlRouterProvider) {
         $stateProvider
         .state('home', {
-            url: '/'
+            url: '/',
+            templateUrl: 'app/home/home.html'
         });
 
         $urlRouterProvider.otherwise('/');
+
     };
 
     angular.module('KDRPoints', [
