@@ -4,6 +4,8 @@
     var express = require('express');
     var router = express.Router();
     var config = require('../../config/google_config');
+    var db = require('../controllers/db.js');
+
     var passport = require('passport');
 
     var GoogleStrategy = require('passport-google-oauth20').Strategy;
@@ -16,7 +18,8 @@
         },
         function(accessToken, refreshToken, profile, cb) {
             console.log(profile.displayName + ' has signed in.');
-            return cb(null, profile);
+            db.create(profile.id, profile.name, profile. emails);
+            return cb(null, profile.id);
         })
     );
 
@@ -33,7 +36,7 @@
 
         router.get('/google_signin',
           passport.authenticate('google', 
-            { scope: ['profile'], hd: 'kdrib.org' })
+            { scope: ['profile', 'email'], hd: 'kdrib.org' })
         );
 
         router.get('/google_callback',
@@ -43,10 +46,10 @@
           }
         );
 
-        router.get('/user_test', function(req, res) {
-          res.send(req.user);
+        router.get('/sequelize', function(req, res) {
+          console.log(req.user);
+          res.redirect('/');
         });
-
     };
 
 })();
