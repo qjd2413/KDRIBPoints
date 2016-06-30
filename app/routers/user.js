@@ -58,6 +58,24 @@
           }
           res.redirect('/');
         });
+
+        router.get('/info', function(req, res) {
+          if(req.user) {
+            db.findUser(req.user)
+              .then(function(brother) {
+                var values = {};
+                values.name = brother.firstName + ' ' + brother.lastName;
+                values.pin = brother.pin;
+                if(!values.pin) {
+                  values.incomplete = true;
+                } 
+                res.send(brother);
+                
+              });
+          } else {
+            res.send(null); 
+          }
+        });
     };
 
 })();

@@ -4,14 +4,16 @@
         <link rel="stylesheet" href="css/style.css">
         <!-- endinject -->
     </head>
-    <body>
-        <div class="content-wrapper">
-            <div ui-view></div>
-        </div>
+    <body ng-app="KDRPoints">
         <!-- inject:js -->
         <script src="bower_components/angular/angular.js"></script>
         <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
         <script src="app/app.module.js"></script>
+        <script src="app/header.js"></script>
         <!-- endinject -->
+      <div ng-include="'header.html'"></div>
+        <div class="content-wrapper">
+            <div ui-view></div>
+        </div>
     </body>
 </html>

@@ -15,6 +15,9 @@ module.exports = {
         email: email[0].value
       }
     }).then(function() {});
+  },
+  findUser: function(id) {
+    return Brother.findById(id);
   }
 }
 
