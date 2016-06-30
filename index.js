@@ -10,8 +10,6 @@
 
   var config = require('./config/config');
 
-  require('./database/start_database')();
-
   var app = express();
 
   app.use(expressSession(
