@@ -7,24 +7,26 @@
   var compress = require('compression');
   var glob = require('glob');
   var passport = require('passport');
+  var Sequelize = require('sequelize');
+  var SequelizeStore = require('connect-sequelize')(session);
 
   var config = require('./config/config');
   var mysql_config = require('./config/mysql_config');
-
-  var Sequelize = require('sequelize');
-  var SequelizeStore = require('connect-sequelize')(session);
-  var db = new Sequelize(mysql_config.database, mysql_config.user, mysql_config.pass, 
-      { logging: false });
+  var session_config = require('./config/session_config');
 
   var app = express();
 
+  var db = new Sequelize(mysql_config.database, mysql_config.user, mysql_config.pass, 
+      { logging: false });
+  
+  //session store
   app.use(session(
-        { 
-          secret: 'no thanks', 
-          resave: true, 
-          saveUninitialized: true,
-          store: new SequelizeStore(db, {}, 'user-sessions')
-        }
+    { 
+      secret: session_config.secret,
+      resave: true, 
+      saveUninitialized: true,
+      store: new SequelizeStore(db, {}, 'user-sessions')
+    }
   ));
   app.use(passport.initialize());
   app.use(passport.session());
