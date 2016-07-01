@@ -1,0 +1,31 @@
+
+#header {
+  width: 100%;
+  background-image: url("/img/header/banner.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  height: 17%;
+}
+
+#header div {
+  display: inline-block;
+}
+
+#header-right { 
+
+}
+
+#header-title {
+  font-size: 20px;
+  width: 45%;
+}
+
+#header-crest {
+  width: 10%;
+}
+
+#header-crest img {
+  display: block;
+  height: 95%;
+  margin: 0 auto;
+}

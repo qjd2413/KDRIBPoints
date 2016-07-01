@@ -8,6 +8,9 @@ angular.module('KDRPoints')
         $scope.statusButton.text = 'Sign Out';
         $scope.statusButton.signin = false;
         $scope.statusButton.url = '/user/logout';
+
+        info = info.data;
+        $scope.user = info.firstName.charAt(0) + '. ' + info.lastName;
       } else {
         $scope.statusButton.text = 'Sign In';
         $scope.statusButton.signin = true;
