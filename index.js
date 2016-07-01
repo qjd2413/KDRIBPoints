@@ -2,20 +2,28 @@
   'use strict';
 
   var express = require('express');
-  var expressSession = require('express-session');
+  var session = require('express-session');
   var bodyParser = require('body-parser');
   var compress = require('compression');
   var glob = require('glob');
   var passport = require('passport');
 
   var config = require('./config/config');
+  var mysql_config = require('./config/mysql_config');
+
+  var Sequelize = require('sequelize');
+  var SequelizeStore = require('connect-sequelize')(session);
+  var db = new Sequelize(mysql_config.database, mysql_config.user, mysql_config.pass, 
+      { logging: false });
 
   var app = express();
 
-  app.use(expressSession(
-        { secret: 'no thanks', 
+  app.use(session(
+        { 
+          secret: 'no thanks', 
           resave: true, 
-          saveUninitialized: true
+          saveUninitialized: true,
+          store: new SequelizeStore(db, {}, 'user-sessions')
         }
   ));
   app.use(passport.initialize());
