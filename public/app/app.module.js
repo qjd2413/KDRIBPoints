@@ -2,7 +2,10 @@
 (function() {
     'use strict';
 
-    var KDRPoints = function($stateProvider, $urlRouterProvider) {
+    var KDRPoints = function($stateProvider, $urlRouterProvider, $locationProvider) {
+
+        $locationProvider.html5Mode(true);
+
         $stateProvider
         .state('home', {
             url: '/',
@@ -20,5 +23,5 @@
     angular.module('KDRPoints', [
         'ui.router',
     ])
-    .config(['$stateProvider', '$urlRouterProvider', KDRPoints]);
+    .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', KDRPoints]);
 })();

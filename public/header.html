@@ -1,4 +1,23 @@
 
-<div ng-controller="header">
-  <a ng-href="{{statusButton.url}}">{{statusButton.text}}</a>
+<div ng-controller="header" id="header">
+    <div id="header-title">
+      KDRIB Points
+    </div>
+    
+    <div id="header-crest">
+      <img src="/img/header/crest.png">
+    </div>
+  
+    <div id="header-dropdown">
+      <div id="dropdown-button">
+        <div ng-if="user" id="name-wrapper">
+          {{user}}
+        </div>
+        <img src="/img/header/dropdown.png" width="10px"/>
+      </div>
+      <div id="dropdown-content">
+        <a href="/profile">Profile</a>
+        <a ng-href="{{statusButton.url}}">{{statusButton.text}}</a>
+      </div>
+    </div>
 </div>
