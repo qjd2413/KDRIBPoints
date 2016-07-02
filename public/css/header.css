@@ -47,8 +47,12 @@ li a, .dropbtn, li div {
   text-decoration: none;
 }
 
-li a:hover, .dropdown:hover .dropbtn {
-  background-color: red;
+li a:hover {
+  background-color: #001f5c;
+}
+
+.dropdown:hover .dropbtn, .signin-wrapper:hover .signinbtn {
+  background-color: #ef7f00;
 }
 
 li.dropdown {
