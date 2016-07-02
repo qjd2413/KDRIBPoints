@@ -9,6 +9,7 @@
   var passport = require('passport');
   var Sequelize = require('sequelize');
   var SequelizeStore = require('connect-sequelize')(session);
+  var cookieParser = require('cookie-parser');
 
   var config = require('./config/config');
   var mysql_config = require('./config/mysql_config');
@@ -20,12 +21,13 @@
       { logging: false });
   
   //session store
+  app.use(cookieParser());
   app.use(session(
     { 
       secret: session_config.secret,
-      resave: true, 
-      saveUninitialized: true,
-      store: new SequelizeStore(db, {}, 'user-sessions')
+      resave: false, 
+      saveUninitialized: false,
+      store: new SequelizeStore(db, {}, 'user_sessions')
     }
   ));
   app.use(passport.initialize());
