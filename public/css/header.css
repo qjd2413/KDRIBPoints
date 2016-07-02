@@ -23,23 +23,23 @@
   padding: 0;
 }
 
-ul {
+#header-list {
   list-style-type: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
 }
 
-li {
+.header-item {
   float: left;
   border-right: 1px solid #bbb;
 }
 
-li:last-child {
+.header-item:last-child {
   border-right:none;
 }
 
-li a, .dropbtn, li div {
+.header-item a, .dropbtn, .header-item div {
   display: inline-block;
   color: white;
   text-align: center;
@@ -47,7 +47,7 @@ li a, .dropbtn, li div {
   text-decoration: none;
 }
 
-li a:hover {
+.header-item a:hover {
   background-color: #001f5c;
 }
 
