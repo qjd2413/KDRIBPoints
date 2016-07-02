@@ -6,16 +6,17 @@
   background-repeat: no-repeat;
 }
 
-
 #header-crest {
-  width: 10%;
   display: inline-block;
+  background-image: url("/img/header/crest.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
-#header-crest img {
-  display: block;
-  height: 90%;
-  margin: 3% auto;
+#header-crest-container {
+  border: 0px;
+  padding: 7px;
 }
 
 #name-wrapper {

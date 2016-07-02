@@ -2,7 +2,12 @@
   <ul>
     <li><div id="header-title">KDR Points</div></li>
     <li><a href="">Fake Link</a></li>
-    <li ng-hide="user">
+
+    <li id="header-crest-container">
+      <div id="header-crest"></div>
+    </li>
+
+    <li ng-hide="user" style="float:right">
       <a href="/user/sign_in">Sign In</a>
     </li>
     <li ng-show="user" style="float:right" class="dropdown">
