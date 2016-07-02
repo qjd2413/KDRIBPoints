@@ -7,10 +7,10 @@ angular.module('KDRPoints')
       if(info && info.data && info.data.id) {
         $scope.statusButton.text = 'Sign Out';
         $scope.statusButton.signin = false;
-        $scope.statusButton.url = '/user/logout';
 
         info = info.data;
         $scope.user = info.firstName.charAt(0) + '. ' + info.lastName;
+        $scope.statusButton.url = '/user/sign_out';
       } else {
         $scope.statusButton.text = 'Sign In';
         $scope.statusButton.signin = true;
