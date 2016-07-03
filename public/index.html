@@ -1,6 +1,7 @@
 <html>
     <head>
         <!-- inject:css -->
+        <link rel="stylesheet" href="css/footer.css">
         <link rel="stylesheet" href="css/header.css">
         <link rel="stylesheet" href="css/style.css">
         <!-- endinject -->
@@ -12,9 +13,12 @@
         <script src="app/app.module.js"></script>
         <script src="app/header.js"></script>
         <!-- endinject -->
-      <div ng-include="'header.html'"></div>
+
+        <div ng-include="'header.html'"></div>
         <div class="content-wrapper">
             <div ui-view></div>
         </div>
+        <div ng-include="'footer.html'"></div>
+
     </body>
 </html>
