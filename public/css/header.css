@@ -55,6 +55,10 @@
   background-color: #ef7f00;
 }
 
+.dropbtn div, .dropbtn img {
+  display:inline;
+}
+
 li.dropdown {
   display: inline-block;
 }
