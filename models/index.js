@@ -12,6 +12,7 @@ var sequelize = new Sequelize(mysql_config.database, mysql_config.user, mysql_co
     { logging: false }
 );
 var db        = {};
+var q = require('q');
 
 fs
   .readdirSync(__dirname)
@@ -29,7 +30,81 @@ Object.keys(db).forEach(function(modelName) {
             }
 });
 
-sequelize.sync();
+sequelize.sync()
+  .then(function() {
+    var auths = [
+      { level: 'sysAdmin' },
+      { level: 'eboard'},
+      { level: 'jboard' },
+      { level: 'chair' }
+    ];  
+
+    var auth_calls = [];
+    for(var i = 0; i < auths.length; i++) {
+      auth_calls.push(db.Authorization.findOrCreate({
+        where: auths[i],
+        defaults: auths[i]
+      }));
+    }
+    q.all(auth_calls)
+      .then(function(data) {
+        var auth = {};
+        var values;
+        for(var i = 0; i < data.length; i++) {
+          values = data[i][0].dataValues;
+          auth[values.level] = values.id;
+        }
+        var positions = [
+          { 
+            name: 'sysAdmin',
+            AuthorizationId: auth['sysAdmin']
+          },{ 
+            name: 'Consul', 
+            AuthorizationId: auth['eboard']
+          },{ 
+            name: 'Senior Tribune', 
+            AuthorizationId: auth['eboard'] 
+          },{ 
+            name: 'Junior Tribune', 
+            AuthorizationId: auth['eboard'] 
+          },{ 
+            name: 'Quaestor', 
+            AuthorizationId: auth['eboard'] 
+          },{ 
+            name: 'Praetor', 
+            AuthorizationId: auth['eboard'] 
+          },{
+            name: 'Pontifex',
+            AuthorizationId: auth['jboard']
+          },{
+            name: 'Centurion',
+            AuthorizationId: auth['jboard']
+          },{
+            name: 'Aedile',
+            AuthorizationId: auth['jboard']
+          },{
+            name: 'Custodian',
+            AuthorizationId: auth['jboard']
+          }
+        ];
+        var position_calls = [];
+        for(var i = 0; i < positions.length; i++) {
+          position_calls.push(db.Position.findOrCreate({
+            where: positions[i]
+          }));
+        }
+        return q.all(position_calls);
+
+      })
+      .then(function() {
+        console.log('Database initialized.');
+      })
+      .fail(function(err) {
+        console.log('Error initializing database');
+        console.log(err);
+      })
+});
+
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
