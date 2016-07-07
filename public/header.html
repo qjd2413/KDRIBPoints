@@ -1,9 +1,9 @@
 <div id="header" ng-controller="header">
   <ul id="header-list">
-    <li class="header-item"><div id="header-title">KDR Points</div></li>
+    <li ui-sref="root.home" class="header-item"><div id="header-title">KDR Points</div></li>
     <li class="header-item"><a href="">Fake Link</a></li>
 
-    <li class="header-item" id="header-crest-container">
+    <li ui-sref="root.home" class="header-item" id="header-crest-container">
       <div id="header-crest"></div>
     </li>
 
@@ -18,7 +18,6 @@
         <img src="/img/header/dropdown.png" width="9px" />
       </div>
       <div class="dropdown-content">
-        <a href="/profile">Profile</a>
         <a href="/user/sign_out">Sign Out</a>
       </div>
     </li>
