@@ -17,6 +17,7 @@
     "gulp-nodemon": "^2.0.7",
     "jshint": "^2.9.2",
     "jshint-stylish": "^2.2.0",
+    "lodash": "^4.13.1",
     "main-bower-files": "^2.13.1",
     "mysql": "^2.11.1",
     "passport": "^0.3.2",
