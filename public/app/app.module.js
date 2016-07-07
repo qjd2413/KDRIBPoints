@@ -3,7 +3,7 @@
     'use strict';
 
     var rootCtrl = function($scope, $state, userService) {
-      $scope.$on('$stateChangeStart', function(event, toState) {
+      $scope.$on('$stateChangeSuccess', function(event, toState) {
         userService.authenticate()
           .then(function(auth_status) {
             if(auth_status.incomplete) {
