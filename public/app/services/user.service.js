@@ -16,7 +16,7 @@
     var postHttp = function(url, data) {
       return $http.post(url, data)
         .then(function(data) {
-          return data.data
+          return data.data;
         }, function(err) {
           console.log(err);
           return null;
@@ -33,9 +33,8 @@
                 $state.go('incomplete');
                 return;
               }
-              user = {};
+              user = info;
               user.name = info.firstName.charAt(0) + '. ' + info.lastName;
-              user.id = info.id;
               return user;
             }
           });
@@ -43,7 +42,7 @@
       updateUser: function(newUser) {
         return postHttp('/user/update', newUser)
           .then(function(stat) {
-            return stat;
+            return stat === 'OK';
           });
       }
     };
