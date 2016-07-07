@@ -63,19 +63,43 @@
           if(req.user) {
             db.findUser(req.user)
               .then(function(brother) {
-                var values = {};
-                values.name = brother.firstName + ' ' + brother.lastName;
-                values.pin = brother.pin;
-                if(!values.pin) {
-                  values.incomplete = true;
+                var info = {};
+                info.firstName = brother.firstName;
+                info.lastName = brother.lastName;
+                info.pin = brother.pin;
+                info.email = brother.email;
+                info.id = brother.id;
+                if(!info.pin) {
+                  info.incomplete = true;
                 } 
-                res.send(brother);
-                
+                res.send(info); 
               });
           } else {
             res.send(null); 
           }
         });
+
+        router.post('/update', function(req, res) {
+          var http_status;
+          // not signed in
+          if(!req.user) {
+            res.sendStatus(403);
+            return;
+          } 
+          // no body
+          if(!req.body || !req.body.id) {
+            res.sendStatus(400);
+            return;
+          }
+          // attempting to change a different user
+          if(req.body.id !== req.user) {
+            res.send('Stop');
+            return;
+          }
+          db.updateUser(req.body, req.body.id);
+          res.sendStatus(200);
+        });
+
     };
 
 })();

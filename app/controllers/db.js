@@ -15,6 +15,14 @@ module.exports = {
   },
   findUser: function(id) {
     return Brother.findById(id);
+  },
+  updateUser: function(user, id) {
+    return Brother.update(user,
+      {
+        where: { id: id },
+        fields: ['pin']
+      }
+    );
   }
 }
 
