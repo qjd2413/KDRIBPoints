@@ -6,7 +6,6 @@
       $scope.$on('$stateChangeStart', function(event, toState) {
         userService.authenticate()
           .then(function(auth_status) {
-            console.log(auth_status, toState);
             if(auth_status.incomplete) {
               $state.go('root.incomplete');
             }
