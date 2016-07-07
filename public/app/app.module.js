@@ -9,9 +9,10 @@
             url: '/',
             templateUrl: 'app/home/home.html'
         })
-        .state('new_user', {
-            url: '/new_user',
-            templateUrl: 'app/new_user/new_user.html'
+        .state('incomplete', {
+            url: '/incomplete',
+            templateUrl: 'app/incomplete/incomplete.html',
+            controller: 'incompleteCtrl',
         });
 
         $urlRouterProvider.otherwise('/');
