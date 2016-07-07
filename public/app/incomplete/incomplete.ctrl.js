@@ -9,12 +9,11 @@
 
     $scope.submit = function() {
       user = $scope.user;
-      console.log(user.pin, user.pin.match(/\d{1,3}/));
-      if(user.pin && user.pin.match(/\d{1,3}/)) {
+      if(user.pin && user.pin.toString().match(/\d{1,3}/)) {
         userService.updateUser(user)
           .then(function(success) {
             if(success) {
-              $state.go('home')
+              $state.go('root.home')
             }
           });
       } else {
