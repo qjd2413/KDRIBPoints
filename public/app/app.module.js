@@ -23,7 +23,7 @@
             url: '',
             abstract: true,
             controller: ['$scope', '$state', 'userService', rootCtrl],
-            template: '<ui-view />',
+            templateUrl: 'root.html',
             resolve: {
               user: ['userService', function(userService) {
                   return userService.getUser();
