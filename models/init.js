@@ -17,7 +17,7 @@ module.exports = function(db) {
         auth[tmp.level] = tmp.id;
       })
       return q.all(lodash.map(positions, function(position) {
-        position.AuthorizationId = auth[positions.AuthLevel];
+        position.AuthorizationId = auth[position.AuthLevel];
         delete position.AuthLevel;
         return db.Position.findOrCreate({
           where: position

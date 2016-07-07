@@ -8,14 +8,6 @@ module.exports = function(sequelize) {
       classMethods: {
         associate: function(models) {
           Position.belongsTo(models.Authorization);
-        } 
-      },
-      hooks: {
-        afterCreate: function(instance) {
-          console.log(instance);
-        },
-        afterUpdate: function(instance) {
-          console.log(instance); 
         }
       }
     }

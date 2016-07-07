@@ -1,8 +1,5 @@
 [
   { 
-    "name": "sysAdmin",
-    "AuthLevel": "sysAdmin"
-  },{ 
     "name": "Consul", 
     "AuthLevel": "eboard"
   },{ 
