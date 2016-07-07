@@ -7,8 +7,7 @@ var lodash = require('lodash');
 module.exports = function(db) { 
     q.all(lodash.map(auths, function(auth) {
       return db.Authorization.findOrCreate({
-        where: auth,
-        defaults: auth
+        where: auth
       });
     }))
     .then(function(data) {
