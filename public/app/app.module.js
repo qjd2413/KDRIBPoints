@@ -20,25 +20,35 @@
 
         $stateProvider
         .state('root', {
-            url: '',
-            abstract: true,
-            controller: ['$scope', '$state', 'userService', rootCtrl],
-            templateUrl: 'root.html',
-            resolve: {
-              user: ['userService', function(userService) {
-                  return userService.getUser();
-              }]
-            }
+          url: '',
+          abstract: true,
+          controller: ['$scope', '$state', 'userService', rootCtrl],
+          templateUrl: 'root.html',
+          resolve: {
+            user: ['userService', function(userService) {
+                return userService.getUser();
+            }]
+          }
         })
-          .state('root.home', {
-            url: '/',
-            templateUrl: 'app/home/home.html'
-          })
-          .state('root.incomplete', {
-              url: '/incomplete',
-              templateUrl: 'app/incomplete/incomplete.html',
-              controller: 'incompleteCtrl',
-          });
+        .state('root.home', {
+          url: '/',
+          templateUrl: 'app/home/home.html'
+        })
+        .state('root.incomplete', {
+          url: '/incomplete',
+          templateUrl: 'app/incomplete/incomplete.html',
+          controller: 'incompleteCtrl',
+        })
+        .state('root.brothers', {
+          url: '/brothers',
+          templateUrl: '/app/brothers/brothers.html',
+          controller: 'brothersCtrl',
+          resolve: {
+            brothers: ['brotherService', function(brotherService) {
+              return brotherService.getBrothers();
+            }]
+          }
+        });
 
         $urlRouterProvider.otherwise('/');
 
