@@ -1,4 +1,5 @@
 var fs = require('fs');
+var dateFormat = require('dateformat');
 
 var config = require('../../config/config.js').logger;
 
@@ -7,7 +8,8 @@ var log = function(label, args) {
     for(var i in args) {
       string.push(args[i]);
     }
-    string = label + ': ' + string.join(' ');
+    var date = dateFormat(new Date(), '[HH:MM:ss]');
+    string = date + ' ' + label + ': ' + string.join(' ');
     if(config.console) {
       console.log(string);
     }
