@@ -15,6 +15,14 @@ Points site for the Iota Beta chapter of Kappa Delta Rho
 9. Replace information in `google_config.js` with your own information obtained in step 5
 10. Run `gulp` to start the server
 
+### SysAdmin setup
+Adding System Adminstrators (you should probably do this)
+1. Log the desired SysAdmin into the site
+2. `mysql -u <user> -p`, enter password at the prompt
+3. `use kdrpoints;`
+4. `INSERT INTO SysAdmins(BrotherId) SELECT id FROM Brothers WHERE email='<email>@kdrib.org';`
+5. Ensure they have been added correctly by running `SELECT * FROM SysAdmins`
+
 ### Troubleshooting
 Error | Solution
 ------|---------
