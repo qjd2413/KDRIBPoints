@@ -9,34 +9,41 @@ var log = function(label, args) {
     for(var i in args) {
       string.push(args[i]);
     }
-    var date = dateFormat(new Date(), '[HH:MM:ss]');
-    string = date + ' ' + label + ': ' + string.join(' ');
+    
+    var time = dateFormat(new Date(), '[HH:MM:ss]');
+    string = time + ' ' + label + ': ' + string.join(' ');
+
     if(config.console) {
       console.log(string);
     }
+
     if(config.file) {
-      fs.stat(config.file, function(err, stats) {
-        var daystamp = false;
-        var today = new Date().toLocaleDateString();
+      var today = new Date().toLocaleDateString();
+      fs.readFile(config.file, 'utf8', function(err, content) {
         if(err) {
-          //file doesn't exist
-          daystamp = true;
-        } else {
-          var content = fs.readFileSync(config.file, 'utf8');
-          content = lodash.without(content.split('\n'), '');
-          var i, lastDate;
-          for(i = content.length-1; i >= 0; i--) {
-            if(content[i].match(/\d{1,2}\/\d{1,2}\/\d{1,4}/)) {
-              lastDate = Date.parse(content[i]);
-              break;              
-            } 
+          if(err.errno !== -2) {
+            //unknown error, log to console
+            console.log(err);
+            //attempt to log to file
+            string = today + '\n' + err;
+          } else {
+            //file DNE, prepend date
+            string = today + '\n' + string;
           }
+        } else {
+          //remove everything but daystamps
+          content = content.split('\n');
+          content = lodash.filter(content, function(line) {
+           return line.match(/\d{1,2}\/\d{1,2}\/\d{1,4}/);
+          });
+
+          var lastDate = Date.parse(content[content.length-1]);
           todayDate = Date.parse(today);
-          daystamp = todayDate > lastDate;
+          if(todayDate > lastDate) {
+            string = today + '\n' + string;
+          }
         }
-        if(daystamp) {
-          string = today + '\n' + string;
-        }
+
         fs.appendFileSync(config.file, string+'\n');
       });
     }
