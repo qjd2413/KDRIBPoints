@@ -24,6 +24,7 @@ module.exports = function(sequelize) {
       classMethods: {
         associate: function(models) {
           Brother.hasMany(models.Position);
+          Brother.hasOne(models.SysAdmin);
         }
       }
     }

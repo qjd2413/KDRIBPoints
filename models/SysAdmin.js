@@ -5,15 +5,7 @@ module.exports = function(sequelize) {
     {
       
     }, {
-      timestamps: false,
-      classMethods: {
-        associate: function(models) {
-          SysAdmin.belongsTo(models.Brother, { 
-            as: 'admin',
-            onDelete: 'CASCADE'
-          });
-        }
-      }
+      timestamps: false
     }
   );
   return SysAdmin;
