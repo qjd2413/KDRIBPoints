@@ -14,7 +14,7 @@ module.exports = function(db) {
       var auth = {};
       lodash.map(data, function(curr) {
         var tmp = curr[0].dataValues;
-        auth[tmp.level] = tmp.id;
+        auth[tmp.name] = tmp.id;
       })
       return q.all(lodash.map(positions, function(position) {
         position.AuthorizationId = auth[position.AuthLevel];

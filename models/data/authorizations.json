@@ -1,9 +1,12 @@
 [
   {
-    "level": "eboard"
+    "name": "eboard",
+    "level": 0
   },{ 
-    "level": "jboard" 
+    "name": "jboard",
+    "level": 1
   },{ 
-    "level": "chair" 
+    "name": "chair",
+    "level": 2
   }
 ]  
