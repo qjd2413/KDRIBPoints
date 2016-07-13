@@ -16,6 +16,13 @@
       });
     }
 
+
+    var adminCtrl = function($scope, $state, AuthStatus) {
+      if(!AuthStatus.admin) {
+        $state.go('root.home');
+      }
+    }
+
     var KDRPoints = function($stateProvider, $urlRouterProvider) {
 
         $stateProvider
@@ -38,7 +45,24 @@
               url: '/incomplete',
               templateUrl: 'app/incomplete/incomplete.html',
               controller: 'incompleteCtrl',
-          });
+          })
+          .state('root.admin', {
+              url: '/admin',
+              abstract: true,
+              template: '<ui-view />',
+              controller: ['$scope', '$state', 'AuthStatus', adminCtrl],
+              resolve: {
+                AuthStatus: ['userService', function(userService) {
+                    return userService.authenticate();
+
+                }]
+              }
+          })
+            .state('root.admin.home', {
+                url: '/home',
+                templateUrl: 'app/admin/home/home.html',
+                controller: 'rootHomeCtrl'
+            });
 
         $urlRouterProvider.otherwise('/');
 
