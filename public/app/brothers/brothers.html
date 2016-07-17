@@ -1,15 +1,8 @@
 <h1>All Brothers</h1>
-<div>
-<table>
-  <th>
-      <td>Brother Name</td>
-      <td>Active/Inactive</td>
-      <td>Pin</td>
-  </th>
-  <tr ng-repeat='brother in brothers'>
-      <td>{{brother.firstName}} {{brother.lastName}}</td>
-      <td>Active</td>
-      <td>#{{brother.pin}}</td>
-  </tr>
-</table>
+<div class="brother porange" ng-repeat='brother in brothers'>
+  <div class='pin'>#{{brother.pin}}</div>
+  <div class='brother-info'>
+    <h2>{{brother.firstName}} {{brother.lastName}}</h2>
+    {{brother.position}}
+  </div>
 </div>
