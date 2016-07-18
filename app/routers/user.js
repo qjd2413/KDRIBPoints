@@ -5,6 +5,7 @@
     var router = express.Router();
     var config = require('../../config/google_config');
     var db = require('../controllers/db.js');
+    var q = require('q');
 
     var passport = require('passport');
 
@@ -61,8 +62,12 @@
 
         router.get('/info', function(req, res) {
           if(req.user) {
-            db.findUser(req.user)
-              .then(function(brother) {
+            q.all([
+              db.findUser(req.user),
+              db.userAuthorization(req.user)
+            ])
+              .then(function(resp) {
+                var brother = resp[0];
                 var info = {};
                 info.firstName = brother.firstName;
                 info.lastName = brother.lastName;
@@ -72,11 +77,19 @@
                 if(!info.pin) {
                   info.incomplete = true;
                 } 
+                info.authStatus = resp[1];
                 res.send(info); 
               });
           } else {
             res.send(null); 
           }
+        });
+
+        router.get('/list', function(req, res) {
+          db.findAllUsers()
+            .then(function(users) {
+              res.send(users); 
+            });
         });
 
         router.post('/update', function(req, res) {

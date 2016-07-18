@@ -61,7 +61,12 @@
             .state('root.admin.home', {
                 url: '/home',
                 templateUrl: 'app/admin/home/home.html',
-                controller: 'rootHomeCtrl'
+                controller: 'rootHomeCtrl',
+                resolve: {
+                  brothers: ['userService', function(userService) {
+                    return userService.getAllUsers();
+                  }]
+                }
             });
 
         $urlRouterProvider.otherwise('/');
