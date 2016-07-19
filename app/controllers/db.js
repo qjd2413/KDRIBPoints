@@ -61,6 +61,15 @@ module.exports = {
   },
   findAllPositions: function() {
     return Position.findAll();
+  },
+  assignPosition: function(brother, position) {
+    return Position.update(
+        { BrotherId: brother },
+        {
+          where: { id: position},
+          fields: ['BrotherId']
+        }
+    );
   }
 }
 

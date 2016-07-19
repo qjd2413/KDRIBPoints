@@ -25,6 +25,13 @@
     return {
       getAllPositions: function() {
         return getHttp('position/list');
+      },
+      assign: function(brother, position) {
+        if(brother && position) {
+          postHttp('position/assign',
+              { brother: brother.id, position: position.id }
+          );
+        }
       }
     };
   };
