@@ -58,6 +58,9 @@ module.exports = {
       }
       return null;
     });
+  },
+  findAllPositions: function() {
+    return Position.findAll();
   }
 }
 

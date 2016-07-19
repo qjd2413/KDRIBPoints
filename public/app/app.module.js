@@ -65,6 +65,9 @@
                 resolve: {
                   brothers: ['userService', function(userService) {
                     return userService.getAllUsers();
+                  }],
+                  positions: ['positionService', function(positionService) {
+                    return positionService.getAllPositions();
                   }]
                 }
             });

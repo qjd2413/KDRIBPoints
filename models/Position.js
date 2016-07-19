@@ -3,7 +3,10 @@ var Sequelize = require('sequelize');
 module.exports = function(sequelize) {
   var Position = sequelize.define('Position', 
     {
-      name: Sequelize.STRING,
+      name: { 
+        type: Sequelize.STRING,
+        unique: true
+      }
     }, {
       classMethods: {
         associate: function(models) {
