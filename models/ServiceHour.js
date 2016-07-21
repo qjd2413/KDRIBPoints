@@ -7,7 +7,7 @@ module.exports = function(sequelize) {
       startTime: Sequelize.DATE,
       endTime: Sequelize.DATE,
       amount: Sequelize.INTEGER,
-      approved: Sequelize.BOOLEAN
+      state: Sequelize.CHAR(1)
     }, {
       classMethods: {
         associate: function(models) {
