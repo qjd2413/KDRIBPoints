@@ -38,6 +38,11 @@
               url: '/incomplete',
               templateUrl: 'app/incomplete/incomplete.html',
               controller: 'incompleteCtrl',
+          })
+          .state('root.events', {
+              url: '/events',
+              templateUrl: 'app/events/events.html',
+              controller: 'eventsCtrl',
           });
 
         $urlRouterProvider.otherwise('/');
