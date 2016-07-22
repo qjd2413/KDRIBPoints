@@ -1,0 +1,14 @@
+
+<div id="approve-service">
+  <div ng-hide="done">
+    {{currentHour.Brother.firstName}} {{currentHour.Brother.lastName}} <br />
+    {{currentHour.startTime}} - {{currentHour.endTime}} <br />
+    {{currentHour.duration}} <br />
+    <button ng-click="approve()">Approve</button>
+    <button ng-click="skip()">Skip</button>
+    <button ng-click="reject()">Reject</button>
+  </div>
+  <div ng-show="done">
+    You have no hours left to review.
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<div id="submit-service">
+  <select ng-model="type">
+    <option>Hour</option>
+    <option>Donation</option>
+  </select>
+  <br />
+
+  Description:
+  <input type="text" ng-model="hour.description" />
+  
+  <div ng-show="type === 'Hour'">
+    Start Time: <input type="text" ng-model="hour.startTime" /><br />
+    End Time: <input type="text" ng-model="hour.endTime" /><br />
+  </div>
+
+  <div ng-show="type === 'Donation'">
+    Amount: <input type="text" ng-model="hour.amount" />
+  </div>
+
+  <button ng-click="submit()">Submit</button>
+</div>

@@ -1,7 +1,18 @@
 <div id="header" ng-controller="header">
   <ul id="header-list">
     <li ui-sref="root.home" class="header-item"><div id="header-title">KDR Points</div></li>
-    <li class="header-item"><a href="">Fake Link</a></li>
+
+    <li class="dropdown">
+      <div class="dropbtn">
+        <div id="name-wrapper">
+          Service
+        </div>
+      </div>
+      <div class="dropdown-content">
+        <a ui-sref="root.submitService">Submit</a>
+        <a ng-show="user.authStatus === 'sysadmin' || user.authStatus === 'eboard' || user.positions.indexOf('Service Chair') >= 0" ui-sref="root.approveService">Approve</a>
+      </div>
+    </li>
 
     <li ui-sref="root.home" class="header-item" id="header-crest-container">
       <div id="header-crest"></div>

@@ -6,6 +6,7 @@
     var config = require('../../config/google_config');
     var db = require('../controllers/db.js');
     var q = require('q');
+    var lodash = require('lodash');
 
     var passport = require('passport');
 
@@ -78,6 +79,7 @@
                   info.incomplete = true;
                 } 
                 info.authStatus = resp[1];
+                info.positions = lodash.map(brother.Positions, 'dataValues.name'); 
                 res.send(info); 
               });
           } else {
