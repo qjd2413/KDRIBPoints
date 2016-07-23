@@ -72,8 +72,8 @@
           templateUrl: 'app/admin/home/home.html',
           controller: 'rootHomeCtrl',
           resolve: {
-            brothers: ['userService', function(userService) {
-              return userService.getAllUsers();
+            brothers: ['brotherService', function(brotherService) {
+              return brotherService.getBrothers();
             }],
             positions: ['positionService', function(positionService) {
               return positionService.getAllPositions();

@@ -86,13 +86,6 @@
           }
         });
 
-        router.get('/list', function(req, res) {
-          db.findAllUsers()
-            .then(function(users) {
-              res.send(users); 
-            });
-        });
-
         router.post('/update', function(req, res) {
           var http_status;
           // not signed in

@@ -10,7 +10,9 @@
     app.use('/brothers', router);
 
     router.get('/', function(req, res) {
-      var brothers = Brother.findAll()
+      var brothers = Brother.findAll({
+        include: [SysAdmin, Position]
+      })
         .then(function(brothers) {
           res.send(brothers);
         });

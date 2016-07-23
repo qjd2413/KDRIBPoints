@@ -24,11 +24,6 @@ module.exports = {
       include: [SysAdmin, Position]
     });
   },
-  findAllUsers: function() {
-    return Brother.findAll({
-      include: [SysAdmin, Position]
-    });
-  },
   updateUser: function(user, id) {
     return Brother.update(user,
       {
