@@ -31,10 +31,12 @@
           .then(function(hours) {
             var approvable = [];
             for(var i = 0; i < hours.length; i++) {
-                if(hours[i].state === 'u') {
-                  hours[i].startTime = new Date(hours[i].startTime);
-                  hours[i].endTime = new Date(hours[i].endTime);
-                  hours[i].duration = hours[i].startTime - hours[i].endTime;
+                if(!hours[i].lookedAt) {
+                  if(hours[i].startTime) {
+                    hours[i].startTime = new Date(hours[i].startTime);
+                    hours[i].endTime = new Date(hours[i].endTime);
+                    hours[i].duration = hours[i].startTime - hours[i].endTime;
+                  }
                   approvable.push(hours[i]);
                 }
             }

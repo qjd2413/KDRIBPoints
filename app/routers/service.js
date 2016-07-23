@@ -46,8 +46,7 @@
           //missing data
           var isHours = hour.startTime && hour.endTime;
           var isDonation = hour.amount;
-          var isBothOrNeither = isHours === isDonation;
-          if(!hour.description || isBothOrNeither) {
+          if(!hour.description || isHours === isDonation) {
             res.sendStatus(400);
           }
           if(isDonation) {
