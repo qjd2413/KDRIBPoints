@@ -27,50 +27,59 @@
 
         $stateProvider
         .state('root', {
-            url: '',
-            abstract: true,
-            controller: ['$scope', '$state', 'userService', rootCtrl],
-            templateUrl: 'root.html',
-            resolve: {
-              user: ['userService', function(userService) {
-                  return userService.getUser();
-              }]
-            }
+          url: '',
+          abstract: true,
+          controller: ['$scope', '$state', 'userService', rootCtrl],
+          templateUrl: 'root.html',
+          resolve: {
+            user: ['userService', function(userService) {
+              return userService.getUser();
+            }]
+          }
         })
-          .state('root.home', {
-            url: '/',
-            templateUrl: 'app/home/home.html'
-          })
-          .state('root.incomplete', {
-              url: '/incomplete',
-              templateUrl: 'app/incomplete/incomplete.html',
-              controller: 'incompleteCtrl',
-          })
-          .state('root.admin', {
-              url: '/admin',
-              abstract: true,
-              template: '<ui-view />',
-              controller: ['$scope', '$state', 'AuthStatus', adminCtrl],
-              resolve: {
-                AuthStatus: ['userService', function(userService) {
-                    return userService.authenticate();
-
-                }]
-              }
-          })
-            .state('root.admin.home', {
-                url: '/home',
-                templateUrl: 'app/admin/home/home.html',
-                controller: 'rootHomeCtrl',
-                resolve: {
-                  brothers: ['userService', function(userService) {
-                    return userService.getAllUsers();
-                  }],
-                  positions: ['positionService', function(positionService) {
-                    return positionService.getAllPositions();
-                  }]
-                }
-            });
+        .state('root.home', {
+          url: '/',
+          templateUrl: 'app/home/home.html'
+        })
+        .state('root.incomplete', {
+          url: '/incomplete',
+          templateUrl: 'app/incomplete/incomplete.html',
+          controller: 'incompleteCtrl',
+        })
+        .state('root.brothers', {
+          url: '/brothers',
+          templateUrl: '/app/brothers/brothers.html',
+          controller: 'brothersCtrl',
+          resolve: {
+            brothers: ['brotherService', function(brotherService) {
+              return brotherService.getBrothers();
+            }]
+          }
+        })
+        .state('root.admin', {
+          url: '/admin',
+          abstract: true,
+          template: '<ui-view />',
+          controller: ['$scope', '$state', 'AuthStatus', adminCtrl],
+          resolve: {
+            AuthStatus: ['userService', function(userService) {
+              return userService.authenticate();
+            }]
+          }
+        })
+        .state('root.admin.home', {
+          url: '/home',
+          templateUrl: 'app/admin/home/home.html',
+          controller: 'rootHomeCtrl',
+          resolve: {
+            brothers: ['userService', function(userService) {
+              return userService.getAllUsers();
+            }],
+            positions: ['positionService', function(positionService) {
+              return positionService.getAllPositions();
+            }]
+          }
+        });
 
         $urlRouterProvider.otherwise('/');
 

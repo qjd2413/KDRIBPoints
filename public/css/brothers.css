@@ -1,0 +1,37 @@
+
+.brother {
+  width: 50%;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+}
+
+div.porange {
+  border-color: #ff8f00;
+}
+
+div.middblue {
+  border-color: #002f6c;
+}
+
+.pin {
+  width: fit-content;
+  background-color: #fff;
+  border-radius: 5px;
+  margin: 5px;
+  padding: 5px;
+  font-size: 1.5rem;
+  float: right;
+}
+
+.brother-info {
+  vertical-align: top;
+  width: fit-content;
+  padding: 10px;
+  margin: 10px;
+}
+
+.brother-info h2 {
+  margin: 0px;
+}

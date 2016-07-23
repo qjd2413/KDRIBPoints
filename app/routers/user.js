@@ -4,6 +4,7 @@
     var express = require('express');
     var router = express.Router();
     var config = require('../../config/google_config');
+    var logger = require('../util/logger.js');
     var db = require('../controllers/db.js');
     var q = require('q');
 
@@ -18,7 +19,7 @@
             callbackURL: config.callback
         },
         function(accessToken, refreshToken, profile, cb) {
-            console.log(profile.displayName,'has signed in.');
+            logger.info(profile.displayName,'has signed in.');
             db.sign_in(profile.id, profile.name, profile. emails);
             return cb(null, profile.id);
         })
@@ -40,7 +41,7 @@
             passport.authenticate('google', 
               { scope: ['profile', 'email'], hd: 'kdrib.org' })(req,res)
           } else {
-            console.log('User', req.user, 'already logged in.');
+            logger.warn('User', req.user, 'already logged in.');
             res.redirect('/'); 
           }
         });
@@ -54,7 +55,7 @@
 
         router.get('/sign_out', function(req, res) {
           if(req.user) {
-            console.log('User', req.user, ' has logged out.');
+            logger.info('User', req.user, ' has logged out.');
             req.logout();
           }
           res.redirect('/');
