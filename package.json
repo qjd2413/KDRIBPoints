@@ -8,6 +8,7 @@
     "compression": "^1.6.2",
     "connect-sequelize": "^2.0.2",
     "cookie-parser": "^1.4.3",
+    "dateformat": "^1.0.12",
     "express": "^4.13.4",
     "express-session": "^1.13.0",
     "glob": "^7.0.3",
