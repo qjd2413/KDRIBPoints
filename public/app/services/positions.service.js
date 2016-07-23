@@ -3,7 +3,8 @@
 
   var positionService = function($http) {
     
-    var getHttp = function(url) { return $http.get(url)
+    var getHttp = function(url) {
+      return $http.get(url)
         .then(function(data) {
           return data.data;
         }, function(err) {

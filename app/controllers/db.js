@@ -24,11 +24,6 @@ module.exports = {
       include: [SysAdmin, Position]
     });
   },
-  findAllUsers: function() {
-    return Brother.findAll({
-      include: [SysAdmin, Position]
-    });
-  },
   updateUser: function(user, id) {
     return Brother.update(user,
       {
@@ -47,13 +42,11 @@ module.exports = {
       if(brother.Positions.length) {
         var positions = lodash.uniq(lodash.map(brother.Positions, 'dataValues.AuthorizationId'));
         return q.all(lodash.map(positions, function(positionId) {
-          console.log(positionId);
           return Authorization.findById(positionId);
         })).then(function(authorizations) {
           authorizations = lodash.map(authorizations, 'dataValues');
           var maxAuth = lodash.minBy(authorizations, 'level');
           return maxAuth.name;
-          console.log(maxAuth);
         });
       }
       return null;

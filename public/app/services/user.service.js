@@ -59,9 +59,6 @@
           .then(function(stat) {
             return stat === 'OK';
           });
-      },
-      getAllUsers: function() {
-        return getHttp('/user/list');
       }
     };
   };
