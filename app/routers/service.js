@@ -45,9 +45,10 @@
           var hour = req.body;
           //missing data
           var isHours = hour.startTime && hour.endTime;
-          var isDonation = hour.amount;
+          var isDonation = hour.amount !== null;
           if(!hour.description || isHours === isDonation) {
             res.sendStatus(400);
+            return;
           }
           if(isDonation) {
             //remove extra data

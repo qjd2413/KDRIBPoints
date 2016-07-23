@@ -24,7 +24,7 @@
 
     return {
       submit: function(hour) {
-        postHttp('/service/submit', hour);
+        return postHttp('/service/submit', hour);
       },
       approvableHours: function() {
         return getHttp('/service')
