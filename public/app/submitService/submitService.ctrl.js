@@ -15,8 +15,17 @@
       } else {
         cleanHour.amount = hour.amount;
       }
-      serviceService.submit(cleanHour);
+      serviceService.submit(cleanHour)
+        .then(function() {
+          $scope.hour = {};
+          $scope.success = true;
+        });
     };
+
+    //remove success when new service hour is input
+    $scope.$watch('hour', function() {
+      $scope.success = false;
+    }, true);
   }
 
   angular.module('KDRPoints')

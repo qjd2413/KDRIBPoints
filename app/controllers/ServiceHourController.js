@@ -14,12 +14,12 @@
     },
     submit: function(brotherId, hours) {
       hours.BrotherId = brotherId;
-      hours.state = 'u';
+      hours.lookedAt = false;
       return ServiceHour.create(hours);
     },
     approve: function(hourId) {
       return ServiceHour.update(
-          { state: 'a' },
+          { lookedAt: true, approved: true },
           {
             where: { id: hourId }
           }
@@ -27,7 +27,7 @@
     },
     reject: function(hourId) {
       return ServiceHour.update(
-          { state: 'r' },
+          { lookedAt: true, approved: false },
           {
             where: { id: hourId }
           }
