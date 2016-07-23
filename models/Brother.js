@@ -20,7 +20,14 @@ module.exports = function(sequelize) {
         type: Sequelize.STRING,
         primaryKey: true
       }
-    } 
+    }, {
+      classMethods: {
+        associate: function(models) {
+          Brother.hasMany(models.Position);
+          Brother.hasOne(models.SysAdmin);
+        }
+      }
+    }
   );
   return Brother;
 };

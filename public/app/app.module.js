@@ -16,6 +16,13 @@
       });
     }
 
+
+    var adminCtrl = function($scope, $state, AuthStatus) {
+      if(!AuthStatus.admin) {
+        $state.go('root.home');
+      }
+    }
+
     var KDRPoints = function($stateProvider, $urlRouterProvider) {
 
         $stateProvider
@@ -26,7 +33,7 @@
           templateUrl: 'root.html',
           resolve: {
             user: ['userService', function(userService) {
-                return userService.getUser();
+              return userService.getUser();
             }]
           }
         })
@@ -46,6 +53,30 @@
           resolve: {
             brothers: ['brotherService', function(brotherService) {
               return brotherService.getBrothers();
+            }]
+          }
+        })
+        .state('root.admin', {
+          url: '/admin',
+          abstract: true,
+          template: '<ui-view />',
+          controller: ['$scope', '$state', 'AuthStatus', adminCtrl],
+          resolve: {
+            AuthStatus: ['userService', function(userService) {
+              return userService.authenticate();
+            }]
+          }
+        })
+        .state('root.admin.home', {
+          url: '/home',
+          templateUrl: 'app/admin/home/home.html',
+          controller: 'rootHomeCtrl',
+          resolve: {
+            brothers: ['brotherService', function(brotherService) {
+              return brotherService.getBrothers();
+            }],
+            positions: ['positionService', function(positionService) {
+              return positionService.getAllPositions();
             }]
           }
         });

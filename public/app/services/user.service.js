@@ -34,6 +34,9 @@
             var auth_status = {};
             if(info && info.id) {
               auth_status.user = true;
+              if(info.authStatus === 'eboard' || info.authStatus === 'sysadmin') {
+                auth_status.admin = true;
+              }
               if(info.incomplete) {
                 auth_status.incomplete = true;
               }

@@ -12,12 +12,16 @@ var sequelize = new Sequelize(mysql_config.database, mysql_config.user, mysql_co
     { logging: false }
 );
 var db        = {};
+var init = require('./init.js');
 
 fs
   .readdirSync(__dirname)
     .filter(function(file) {
-          return (file.indexOf(".") !== 0) && (file !== "index.js");
-            })
+      return (file.indexOf(".") !== 0) 
+          && (file.indexOf('.js') !== -1)
+          && (file !== "index.js") 
+          && (file !== 'init.js');
+    })
   .forEach(function(file) {
         var model = sequelize.import(path.join(__dirname, file));
             db[model.name] = model;
@@ -29,7 +33,11 @@ Object.keys(db).forEach(function(modelName) {
             }
 });
 
-sequelize.sync();
+sequelize.sync()
+  .then(function() {
+    init(db);
+});
+
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
