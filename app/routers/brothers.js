@@ -5,6 +5,8 @@
   var router = express.Router();
   var models = require('../../models');
   var Brother = models.Brother;
+  var SysAdmin = models.SysAdmin;
+  var Position = models.Position;
 
   module.exports = function(app) {
     app.use('/brothers', router);
