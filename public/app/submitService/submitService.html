@@ -1,23 +1,54 @@
 <div id="submit-service">
-  <select ng-model="type">
+  <select ng-model="type" ng-change="calculateDuration(); calculateEquivalent()" >
     <option>Hour</option>
     <option>Donation</option>
   </select>
   <br />
 
-  Description:
-  <input type="text" ng-model="hour.description" />
-  
-  <div ng-show="type === 'Hour'">
-    Start Time: <input type="text" ng-model="hour.startTime" /><br />
-    End Time: <input type="text" ng-model="hour.endTime" /><br />
-  </div>
+  <form name="hourForm">
+    Description:
+    <input type="text" ng-model="hour.description" />
 
-  <div ng-show="type === 'Donation'">
-    Amount: <input type="text" ng-model="hour.amount" />
-  </div>
+    <div ng-show="type === 'Hour'">
+      Start:
+      <datepicker date-format="MMMM d, yyyy" date-typer="true" >
+        <input ng-model="hour.start.date" type="text" ng-change="calculateDuration()" />
+      </datepicker><br />
+      <select ng-model="hour.start.hour" ng-options="hr for hr in hours"></select>
+      :
+      <select ng-model="hour.start.min" ng-options="min for min in minutes"></select>
+      <select ng-model="hour.start.cycle" ng-change="changeFunction()" >
+        <option value="AM">AM</option>
+        <option value="PM">PM</option>
+      </select><br />
+      
+      End:
+      <datepicker date-format="MMMM d, yyyy" date-typer="true" >
+        <input ng-model="hour.end.date" type="text" ng-change="calculateDuration()" />
+      </datepicker><br />
+      <select ng-model="hour.end.hour" ng-options="hr for hr in hours"></select>
+      :
+      <select ng-model="hour.end.min" ng-options="min for min in minutes"></select>
+      <select ng-model="hour.end.cycle" ng-change="changeFunction()" >
+        <option value="AM">AM</option>
+        <option value="PM">PM</option>
+      </select><br />
 
-  <button ng-click="submit()">Submit</button>
+      <div class="duration">
+        Duration: {{hour.duration.hours}}:{{hour.duration.minutes}}
+      </div>
+    </div>
 
-  <div ng-show="success">Hour successfully submitted.</div>
+    <div ng-show="type === 'Donation'">
+      Amount: $<input type="number" ng-model="hour.amount" ng-change="calculateEquivalent()" /><br />
+      Hour Equivalent: {{hour.equivalent.hours}}:{{hour.equivalent.minutes}}
+    </div>
+
+    <button ng-click="submit()">Submit</button>
+    
+    <div ng-show="notify.success">{{type}} successfully submitted.</div>
+    <div ng-show="notify.error">{{notify.error}}</div>
+    
+  </form>
+
 </div>
