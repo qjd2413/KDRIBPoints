@@ -3,27 +3,27 @@
 
   var approveServiceCtrl = function($scope, serviceService, approvableHours) {
     $scope.done = approvableHours.length === 0;
-    $scope.currentHour = approvableHours.shift();
+    $scope.nextServiceHour = approvableHours.shift();
     
     var next = function() {
       console.log(approvableHours);
       $scope.done = approvableHours.length === 0;
       if($scope.done) {
-        $scope.currentHour = null;
+        $scope.nextServiceHour = null;
         return;
       }
-      $scope.currentHour = approvableHours.shift();
+      $scope.nextServiceHour = approvableHours.shift();
     }
 
     $scope.skip = next;
     $scope.approve = function() {
-      serviceService.approve($scope.currentHour.id)
+      serviceService.approve($scope.nextServiceHour.id)
         .then(function() {
           next();
         });
     };
     $scope.reject = function() {
-      serviceService.reject($scope.currentHour.id)
+      serviceService.reject($scope.nextServiceHour.id)
         .then(function() {
           next();
         });
