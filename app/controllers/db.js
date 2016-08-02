@@ -55,6 +55,13 @@ module.exports = {
   findAllPositions: function() {
     return Position.findAll();
   },
+  getPosition: function(BrotherId) {
+    return Position.findAll({
+      where: { BrotherId: BrotherId }
+    }).then(function(positions) {
+      return lodash.map(positions, 'dataValues.name');
+    });
+  },
   assignPosition: function(brother, position) {
     return Position.update(
         { BrotherId: brother },
