@@ -56,6 +56,21 @@
             }]
           }
         })
+        .state('root.submitService', {
+          url: '/serviceSubmission',
+          templateUrl: 'app/submitService/submitService.html',
+          controller: 'submitServiceCtrl'
+        })
+        .state('root.approveService', {
+          url: '/approveService',
+          templateUrl: 'app/approveService/approveService.html',
+          controller: 'approveServiceCtrl',
+          resolve: {
+            approvableHours: ['serviceService', function(serviceService) {
+              return serviceService.approvableHours();
+            }]
+          }
+        })
         .state('root.admin', {
           url: '/admin',
           abstract: true,
