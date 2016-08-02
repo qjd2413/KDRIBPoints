@@ -4,7 +4,10 @@
     var express = require('express');
     var router = express.Router();
     var config = require('../../config/google_config');
+    var logger = require('../util/logger.js');
     var db = require('../controllers/db.js');
+    var q = require('q');
+    var lodash = require('lodash');
 
     var passport = require('passport');
 
@@ -17,7 +20,7 @@
             callbackURL: config.callback
         },
         function(accessToken, refreshToken, profile, cb) {
-            console.log(profile.displayName,'has signed in.');
+            logger.info(profile.displayName,'has signed in.');
             db.sign_in(profile.id, profile.name, profile. emails);
             return cb(null, profile.id);
         })
@@ -39,7 +42,7 @@
             passport.authenticate('google', 
               { scope: ['profile', 'email'], hd: 'kdrib.org' })(req,res)
           } else {
-            console.log('User', req.user, 'already logged in.');
+            logger.warn('User', req.user, 'already logged in.');
             res.redirect('/'); 
           }
         });
@@ -53,7 +56,7 @@
 
         router.get('/sign_out', function(req, res) {
           if(req.user) {
-            console.log('User', req.user, ' has logged out.');
+            logger.info('User', req.user, ' has logged out.');
             req.logout();
           }
           res.redirect('/');
@@ -61,8 +64,12 @@
 
         router.get('/info', function(req, res) {
           if(req.user) {
-            db.findUser(req.user)
-              .then(function(brother) {
+            q.all([
+              db.findUser(req.user),
+              db.userAuthorization(req.user)
+            ])
+              .then(function(resp) {
+                var brother = resp[0];
                 var info = {};
                 info.firstName = brother.firstName;
                 info.lastName = brother.lastName;
@@ -72,6 +79,8 @@
                 if(!info.pin) {
                   info.incomplete = true;
                 } 
+                info.authStatus = resp[1];
+                info.positions = lodash.map(brother.Positions, 'dataValues.name'); 
                 res.send(info); 
               });
           } else {

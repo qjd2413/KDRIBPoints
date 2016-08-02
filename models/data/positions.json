@@ -1,0 +1,48 @@
+[
+  { 
+    "name": "Consul", 
+    "AuthLevel": "eboard"
+  },{ 
+    "name": "Senior Tribune", 
+    "AuthLevel": "eboard" 
+  },{ 
+    "name": "Junior Tribune", 
+    "AuthLevel": "eboard" 
+  },{ 
+    "name": "Quaestor", 
+    "AuthLevel": "eboard" 
+  },{ 
+    "name": "Praetor", 
+    "AuthLevel": "eboard" 
+  },{
+    "name": "Pontifex",
+    "AuthLevel": "jboard"
+  },{
+    "name": "Centurion",
+    "AuthLevel": "jboard"
+  },{
+    "name": "Aedile",
+    "AuthLevel": "jboard"
+  },{
+    "name": "Custodian",
+    "AuthLevel": "jboard"
+  }, {
+    "name": "Scholarship Chair",
+    "AuthLevel": "chair"
+  }, {
+    "name": "Service Chair",
+    "AuthLevel": "chair"
+  }, {
+    "name": "Social Chair",
+    "AuthLevel": "chair"
+  }, {
+    "name": "Recruitment Chair",
+    "AuthLevel": "chair"
+  }, {
+    "name": "Fundraising Chair",
+    "AuthLevel": "chair"
+  }, {
+    "name": "PR Chair",
+    "AuthLevel": "chair"
+  }
+]

@@ -1,0 +1,8 @@
+<h1>All Brothers</h1>
+<div ng-repeat='brother in brothers' ng-class-even="'porange'" ng-class-odd="'middblue'" class="brother">
+  <div class='pin'>#{{brother.pin}}</div>
+  <div class='brother-info'>
+    <h2>{{brother.firstName}} {{brother.lastName}}</h2>
+    {{brother.position}}
+  </div>
+</div>

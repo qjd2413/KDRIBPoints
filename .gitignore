@@ -10,6 +10,8 @@ node_modules
 # .DS_Store
 .DS_Store
 
+*.log
+
 public/bower_components
 config/google_config.js
 config/mysql_config.js
