@@ -29,7 +29,7 @@
       // 'user': regular user
       // 'admin': user with admin permissions
      authenticate: function() {
-        return getHttp('/user/info')
+        return getHttp('/brother/info')
           .then(function(info) {
             var auth_status = {};
             if(info && info.id) {
@@ -45,8 +45,9 @@
           });
       },
       getUser: function() {
-        return getHttp('/user/info')
+        return getHttp('/brother/info')
           .then(function(info) {
+              var user = {};
             if(info && info.id) {
               user = info;
               user.name = info.firstName.charAt(0) + '. ' + info.lastName;
@@ -55,7 +56,7 @@
           });
       },
       updateUser: function(newUser) {
-        return postHttp('/user/update', newUser)
+        return postHttp('/brother/update', newUser)
           .then(function(stat) {
             return stat === 'OK';
           });

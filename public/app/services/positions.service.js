@@ -25,7 +25,7 @@
 
     return {
       getAllPositions: function() {
-        return getHttp('position/list');
+        return getHttp('position/');
       },
       assign: function(brother, position) {
         if(brother && position) {

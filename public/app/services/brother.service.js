@@ -15,7 +15,7 @@
 
     return {
       getBrothers: function() {
-       return getHttp('/brothers');
+       return getHttp('/brother');
       }
     };
   };

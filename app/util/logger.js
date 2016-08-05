@@ -1,3 +1,5 @@
+'use strict';
+
 var fs = require('fs');
 var dateFormat = require('dateformat');
 var lodash = require('lodash');
@@ -6,7 +8,7 @@ var config = require('../../config/config.js').logger;
 
 var log = function(label, args) {
     var string = [];
-    for(var i in args) {
+    for(var i = 0; i < args.length; i++) {
       string.push(args[i]);
     }
     
@@ -38,7 +40,7 @@ var log = function(label, args) {
           });
 
           var lastDate = Date.parse(content[content.length-1]);
-          todayDate = Date.parse(today);
+          var todayDate = Date.parse(today);
           if(todayDate > lastDate) {
             string = today + '\n' + string;
           }
