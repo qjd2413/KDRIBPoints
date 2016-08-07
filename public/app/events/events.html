@@ -1,0 +1,10 @@
+<h1>Events</h1>
+<form role='form'>
+  <input ng-model='event.description'>
+  <input ng-model='event.point_value'>
+  <button ng-click='addEvent()'>Add New Event</button>
+</form>
+<div ng-repeat='event in events'>
+  <div>{{event.description}}</div>
+  <div>{{event.point_value}}</div>
+</div>

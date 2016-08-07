@@ -94,6 +94,11 @@
               return positionService.getAllPositions();
             }]
           }
+        })
+        .state('root.events', {
+          url: '/events',
+          templateUrl: 'app/events/events.html',
+          controller: 'eventsCtrl'
         });
 
         $urlRouterProvider.otherwise('/');
