@@ -1,40 +1,38 @@
-/* FILE: models/index.js
- * Taken from the sequelize docs, automatically syncs 
- * models and returns them, along with Sequelize and
- * the instance of sequelize
- */
+'use strict';
 
-var fs        = require("fs");
-var path      = require("path");
-var Sequelize = require("sequelize");
+var fs = require('fs');
+var path = require('path');
+
+var Sequelize = require('sequelize');
+
 var config    = require('../config/config').mysql;
-var sequelize = new Sequelize(config.database, config.user, config.pass, 
-    { logging: false }
-);
-var db        = {};
 var init = require('./init.js');
 
+var sequelize = new Sequelize(
+    config.database, config.user, config.pass, { logging: false }
+);
+var db = {};
+
 fs
-  .readdirSync(__dirname)
+    .readdirSync(__dirname)
     .filter(function(file) {
-      return (file.indexOf(".") !== 0) 
-          && (file.indexOf('.js') !== -1)
-          && (file !== "index.js") 
-          && (file !== 'init.js');
+        return (file.indexOf('.') !== 0) && 
+               (file.indexOf('.js') !== -1) && 
+               (file !== 'index.js') && 
+               (file !== 'init.js');
     })
-  .forEach(function(file) {
+    .forEach(function(file) {
         var model = sequelize.import(path.join(__dirname, file));
-            db[model.name] = model;
-              });
+        db[model.name] = model;
+    });
 
 Object.keys(db).forEach(function(modelName) {
-    if ("associate" in db[modelName]) {
-          db[modelName].associate(db);
-            }
+    if('associate' in db[modelName]) {
+        db[modelName].associate(db);
+    }
 });
 
-sequelize.sync()
-  .then(function() {
+sequelize.sync().then(function() {
     init(db);
 });
 

@@ -1,35 +1,49 @@
-var positions = require('./data/positions.json');
-var auths = require('./data/authorizations.json');
+'use strict';
 
 var q = require('q');
 var lodash = require('lodash');
 
-module.exports = function(db) { 
-    q.all(lodash.map(auths, function(auth) {
-      return db.Authorization.findOrCreate({
-        where: auth
-      });
+var positions = require('./data/positions.json');
+var auths = require('./data/authorizations.json');
+
+var createAuths = function(db) {
+    return q.all(lodash.map(auths, function(auth) {
+        return db.Authorization.findOrCreate({
+            where: auth
+        });
     }))
-    .then(function(data) {
-      var auth = {};
-      lodash.map(data, function(curr) {
-        var tmp = curr[0].dataValues;
-        auth[tmp.name] = tmp.id;
-      })
-      return q.all(lodash.map(positions, function(position) {
-        position.AuthorizationId = auth[position.AuthLevel];
+    .then(function(auths) {
+        var authLevels = {};
+        lodash.map(auths, function(curr) {
+            var tmp = curr[0].dataValues;
+            authLevels[tmp.name] = tmp.id;
+        });
+        return authLevels;
+    });
+};
+
+var createPositions = function(db, authLevels) {
+    return q.all(lodash.map(positions, function(position) {
+        position.AuthorizationId = authLevels[position.AuthLevel];
         delete position.AuthLevel;
         return db.Position.findOrCreate({
-          where: position
+            where: position
         });
-      }));
+    }));
+};
 
+var initialize = function(db) {
+    createAuths(db)
+    .then(function(authLevels) {
+        return createPositions(db, authLevels);
     })
     .then(function() {
-      console.log('Database initialized.');
+        console.log('Database initialized.');
     })
-    .fail(function(err) {
-      console.log('Error initializing database');
-      console.log(err);
-    })
+    .catch(function(err) {
+        console.log('Error initializing database');
+        console.log(err);
+    });
 };
+
+module.exports = initialize;
