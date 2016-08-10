@@ -8,15 +8,15 @@ var passport = require('passport');
 var logger = require('../util/logger');
 
 var userCtrl = require('../controllers/UserController');
-var googleConfig = require('../../config/google_config');
+var config = require('../../config/config').oauth;
 
 var router = express.Router();
 
 passport.use(
     new GoogleStrategy({
-        clientID: googleConfig.client_id,
-        clientSecret: googleConfig.client_secret,
-        callbackURL: googleConfig.callback
+        clientID: config.client_id,
+        clientSecret: config.client_secret,
+        callbackURL: config.callback
     },
     function(accessToken, refreshToken, profile, cb) {
         logger.info(profile.displayName,'has signed in.');

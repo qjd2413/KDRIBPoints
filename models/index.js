@@ -7,8 +7,8 @@
 var fs        = require("fs");
 var path      = require("path");
 var Sequelize = require("sequelize");
-var mysql_config    = require('../config/mysql_config');
-var sequelize = new Sequelize(mysql_config.database, mysql_config.user, mysql_config.pass, 
+var config    = require('../config/config').mysql;
+var sequelize = new Sequelize(config.database, config.user, config.pass, 
     { logging: false }
 );
 var db        = {};

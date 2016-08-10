@@ -12,19 +12,17 @@
   var cookieParser = require('cookie-parser');
 
   var config = require('./config/config');
-  var mysql_config = require('./config/mysql_config');
-  var session_config = require('./config/session_config');
 
   var app = express();
 
-  var db = new Sequelize(mysql_config.database, mysql_config.user, mysql_config.pass, 
-      { logging: false });
+  var db = new Sequelize(config.mysql.database, config.mysql.user, 
+                         config.mysql.pass, { logging: false });
   
   //session store
   app.use(cookieParser());
   app.use(session(
     { 
-      secret: session_config.secret,
+      secret: config.session.secret,
       resave: false, 
       saveUninitialized: false,
       store: new SequelizeStore(db, {}, 'user_sessions')
