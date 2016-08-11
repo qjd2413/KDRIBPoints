@@ -2,25 +2,7 @@
 (function() {
     'use strict';
 
-    var userService = function($http) {
-        var getHttp = function(url) {
-            return $http.get(url)
-                .then(function(data) {
-                    return data.data;
-                }, function() {
-                    return null;
-                });
-        };
-
-        var postHttp = function(url, data) {
-            return $http.post(url, data)
-                .then(function(response) {
-                    return response.data;
-                }, function() {
-                    return null;
-                });
-        };
-
+    var userService = function(httpService) {
         return {
 
             // Returns authentication status(es) of current user
@@ -28,7 +10,7 @@
             // 'user': regular user
             // 'admin': user with admin permissions
             authenticate: function() {
-                return getHttp('/brother/info')
+                return httpService.get('/brother/info')
                     .then(function(info) {
                         var authStatus = {};
                         if(info && info.id) {
@@ -45,7 +27,7 @@
                     });
             },
             getUser: function() {
-                return getHttp('/brother/info')
+                return httpService.get('/brother/info')
                     .then(function(info) {
                         var user = {};
                         if(info && info.id) {
@@ -57,7 +39,7 @@
                     });
             },
             updateUser: function(newUser) {
-                return postHttp('/brother/update', newUser)
+                return httpService.post('/brother/update', newUser)
                     .then(function(stat) {
                         return stat === 'OK';
                     });
@@ -66,5 +48,5 @@
     };
 
     angular.module('KDRPoints')
-        .factory('userService', ['$http', '$state', userService]);
+        .factory('userService', ['httpService', userService]);
 }());
