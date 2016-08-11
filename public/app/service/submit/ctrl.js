@@ -2,7 +2,8 @@
 (function() {
     'use strict';
 
-    var submitServiceCtrl = function($scope, serviceService) {
+    var dependencies = ['$scope', 'serviceService'];
+    var ctrl = function($scope, serviceService) {
         $scope.type = 'Hour';
         $scope.hour = {};
 
@@ -30,7 +31,6 @@
     };
 
     angular.module('KDRPoints')
-        .controller('submitServiceCtrl', ['$scope', 'serviceService',
-                                          submitServiceCtrl]);
+        .controller('serviceSubmitCtrl', dependencies.concat(ctrl));
 }());
 

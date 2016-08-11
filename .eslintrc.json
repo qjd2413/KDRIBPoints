@@ -13,7 +13,7 @@
     "extends": "eslint:recommended",
     "rules": {
         "no-console": "warn",
-        "no-extra-parens": "warn",
+        "no-extra-parens": ["warn", "all", { "conditionalAssign": false, "nestedBinaryExpressions": false }],
         "no-prototype-builtins": "error",
         "block-scoped-var": "warn",
         "curly": "warn",

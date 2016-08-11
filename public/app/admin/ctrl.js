@@ -2,7 +2,8 @@
 (function() {
     'use strict';
 
-    var rootHomeCtrl = function($scope, positionService, brothers, positions) {
+    var dependencies = ['$scope', 'positionService', 'brothers', 'positions'];
+    var ctrl = function($scope, positionService, brothers, positions) {
         $scope.positions = positions;
         $scope.brothers = brothers;
         $scope.newPosition = {};
@@ -15,7 +16,6 @@
     };
 
     angular.module('KDRPoints')
-    .controller('rootHomeCtrl', ['$scope', 'positionService',
-                                 'brothers', 'positions', rootHomeCtrl]);
+    .controller('adminCtrl', dependencies.concat(ctrl));
 }());
 

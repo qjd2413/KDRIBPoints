@@ -2,7 +2,25 @@
 (function() {
     'use strict';
 
-    var userService = function(httpService) {
+    var userService = function($q, httpService) {
+        var user = null;
+
+        var getUser = function() {
+            if(user) {
+                return $q.when(user);
+            }
+            return httpService.get('/brother/info')
+                .then(function(info) {
+                    user = {};
+                    if(info && info.id) {
+                        user = info;
+                        user.name = info.firstName.charAt(0) + '. ' +
+                                    info.lastName;
+                        return user;
+                    }
+                });
+        };
+
         return {
 
             // Returns authentication status(es) of current user
@@ -10,7 +28,7 @@
             // 'user': regular user
             // 'admin': user with admin permissions
             authenticate: function() {
-                return httpService.get('/brother/info')
+                return getUser()
                     .then(function(info) {
                         var authStatus = {};
                         if(info && info.id) {
@@ -26,27 +44,17 @@
                         return authStatus;
                     });
             },
-            getUser: function() {
-                return httpService.get('/brother/info')
-                    .then(function(info) {
-                        var user = {};
-                        if(info && info.id) {
-                            user = info;
-                            user.name = info.firstName.charAt(0) + '. ' +
-                                        info.lastName;
-                            return user;
-                        }
-                    });
-            },
+            getUser: getUser,
             updateUser: function(newUser) {
                 return httpService.post('/brother/update', newUser)
-                    .then(function(stat) {
-                        return stat === 'OK';
+                    .then(function() {
+                        user = null;
+                        return getUser();
                     });
             }
         };
     };
 
     angular.module('KDRPoints')
-        .factory('userService', ['httpService', userService]);
+        .factory('userService', ['$q', 'httpService', userService]);
 }());

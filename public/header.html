@@ -1,27 +1,33 @@
-<div id="header" ng-controller="header">
+<div id="header"> <!--ng-controller="header"-->
   <ul id="header-list">
-    <li ui-sref="root.home" class="header-item"><div id="header-title">KDR Points</div></li>
+    <li class="header-item">
+        <a ui-sref="root.home" id="header-title">KDR Points</a>
+    </li>
 
-    <li class="dropdown">
+    <li class="left-dropdown" ng-show="headerLinks.service">
       <div class="dropbtn">
         <div id="name-wrapper">
           Service
         </div>
       </div>
       <div class="dropdown-content">
-        <a ui-sref="root.submitService">Submit</a>
-        <a ng-show="user.authStatus === 'sysadmin' || user.authStatus === 'eboard' || user.positions.indexOf('Service Chair') >= 0" ui-sref="root.approveService">Approve</a>
+        <a ui-sref="root.service.submit" ng-show="headerLinks.service.submit">Submit</a>
+        <a ui-sref="root.service.approve" ng-show="headerLinks.service.approve">Approve</a>
       </div>
+    </li>
+
+    <li class="header-item" ng-show="headerLinks.brother">
+        <a ui-sref="root.brothers">Brothers</a>
     </li>
 
     <li ui-sref="root.home" class="header-item" id="header-crest-container">
       <div id="header-crest"></div>
     </li>
 
-    <li ng-hide="user" class="signin-wrapper header-item" style="float:right">
+    <li ng-hide="headerLinks.profile" class="signin-wrapper header-item" style="float:right">
       <a class="signinbtn" href="/user/sign_in">Sign In</a>
     </li>
-    <li ng-show="user" style="float:right" class="dropdown">
+    <li ng-show="headerLinks.profile" style="float:right" class="dropdown">
       <div class="dropbtn">
         <div id="name-wrapper">
           {{user.name}}
@@ -29,8 +35,8 @@
         <img src="/img/header/dropdown.png" width="9px" />
       </div>
       <div class="dropdown-content">
-        <a ng-show="user.authStatus==='sysadmin' || user.authStatus==='eboard'" ui-sref="root.admin.home">Admin</a>
-        <a href="/user/sign_out">Sign Out</a>
+        <a ng-show="headerLinks.profile.admin">Admin</a>
+        <a href="/user/sign_out" ng-show="headerLinks.profile.signout">Sign Out</a>
       </div>
     </li>
   </ul>

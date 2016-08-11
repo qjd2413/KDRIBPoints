@@ -2,7 +2,8 @@
 (function() {
     'use strict';
 
-    var approveServiceCtrl = function($scope, serviceService, approvableHours) {
+    var dependencies = ['$scope', 'serviceService', 'approvableHours'];
+    var ctrl = function($scope, serviceService, approvableHours) {
         $scope.done = approvableHours.length === 0;
         $scope.nextServiceHour = approvableHours.shift();
 
@@ -17,21 +18,14 @@
 
         $scope.skip = next;
         $scope.approve = function() {
-            serviceService.approve($scope.nextServiceHour.id)
-        .then(function() {
-            next();
-        });
+            serviceService.approve($scope.nextServiceHour.id).then(next);
         };
         $scope.reject = function() {
-            serviceService.reject($scope.nextServiceHour.id)
-        .then(function() {
-            next();
-        });
+            serviceService.reject($scope.nextServiceHour.id).then(next);
         };
     };
 
     angular.module('KDRPoints')
-    .controller('approveServiceCtrl', ['$scope', 'serviceService',
-                                       'approvableHours', approveServiceCtrl]);
+    .controller('serviceApproveCtrl', dependencies.concat(ctrl));
 }());
 

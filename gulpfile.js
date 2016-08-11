@@ -11,7 +11,7 @@ var eslint = require('gulp-eslint');
     // PATHS
     var bowerFiles = mainBowerFiles('**/*.js');
     var angularFiles = './public/app/**/*.js';
-    var serverFiles = './app/**/.*.js';
+    var serverFiles = './app/**/*.js';
     var configFile = './config/config.js';
     var dbFiles = './models/*.js';
     var jsFiles = [angularFiles, serverFiles, configFile, dbFiles];
@@ -33,7 +33,7 @@ var eslint = require('gulp-eslint');
             .pipe(eslint.format())
             .pipe(eslint.failAfterError());
     });
-
+    gulp.watch(jsFiles, ['inject']);
 
     // automatically restart the server if js files change
     gulp.task('start', ['inject'], function() {

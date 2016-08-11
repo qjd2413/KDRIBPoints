@@ -51,6 +51,23 @@
   background-color: #001f5c;
 }
 
+.left-dropdown {
+  float: left;
+  border-right: 1px solid #bbb;
+}
+
+.left-dropdown:hover {
+  background-color: #001f5c;
+}
+
+li.left-dropdown {
+  display: inline-block;
+}
+
+.left-dropdown:hover .dropdown-content {
+  display: block;
+}
+
 .dropdown:hover .dropbtn, .signin-wrapper:hover .signinbtn {
   background-color: #ef7f00;
 }

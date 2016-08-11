@@ -45,7 +45,7 @@ var userCtrl = require('./UserController');
                     where: { id: id },
                     fields: ['pin']
                 }
-                    );
+            );
         },
 
         // info
@@ -55,7 +55,9 @@ var userCtrl = require('./UserController');
         //   information about the specified brother
         info: function(id) {
             return q.all([
-                Brother.findById(id),
+                Brother.findById(id, {
+                    include: [SysAdmin, Position]
+                }),
                 userCtrl.authorization(id)
             ]).then(function(resp) {
                 var brother = resp[0];

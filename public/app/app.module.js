@@ -2,51 +2,32 @@
 (function() {
     'use strict';
 
-    var rootCtrl = function($scope, $state, userService) {
-        $scope.$on('$stateChangeSuccess', function(event, toState) {
-            userService.authenticate()
-          .then(function(authStatus) {
-              if(authStatus.incomplete) {
-                  $state.go('root.incomplete');
-              }
-              if(toState.name === 'root.incomplete' && !authStatus.incomplete) {
-                  $state.go('root.home');
-              }
-          });
-        });
-    };
-
-    var adminCtrl = function($scope, $state, AuthStatus) {
-        if(!AuthStatus.admin) {
-            $state.go('root.home');
-        }
-    };
-
     var KDRPoints = function($stateProvider, $urlRouterProvider) {
         $stateProvider
-        .state('root', {
-            url: '',
-            abstract: true,
-            controller: ['$scope', '$state', 'userService', rootCtrl],
-            templateUrl: 'root.html',
-            resolve: {
-                user: ['userService', function(userService) {
-                    return userService.getUser();
-                }]
-            }
-        })
+            .state('root', {
+                url: '',
+                abstract: true,
+                controller: 'rootCtrl',
+                templateUrl: 'root.html',
+                resolve: {
+                    user: ['userService', function(userService) {
+                        return userService.getUser();
+                    }]
+                }
+            })
         .state('root.home', {
             url: '/',
-            templateUrl: 'app/home/home.html'
+            templateUrl: 'app/home/template.html',
         })
         .state('root.incomplete', {
             url: '/incomplete',
-            templateUrl: 'app/incomplete/incomplete.html',
+            templateUrl: 'app/incomplete/template.html',
             controller: 'incompleteCtrl',
+            data: ['incomplete']
         })
         .state('root.brothers', {
             url: '/brothers',
-            templateUrl: '/app/brothers/brothers.html',
+            templateUrl: '/app/brothers/template.html',
             controller: 'brothersCtrl',
             resolve: {
                 brothers: ['brotherService', function(brotherService) {
@@ -54,36 +35,41 @@
                 }]
             }
         })
-        .state('root.submitService', {
-            url: '/serviceSubmission',
-            templateUrl: 'app/submitService/submitService.html',
-            controller: 'submitServiceCtrl'
+        .state('root.service', {
+            url: '/service',
+            abstract: true,
+            template: '<ui-view />'
         })
-        .state('root.approveService', {
-            url: '/approveService',
-            templateUrl: 'app/approveService/approveService.html',
-            controller: 'approveServiceCtrl',
+        .state('root.service.submit', {
+            url: '/submit',
+            templateUrl: 'app/service/submit/template.html',
+            controller: 'serviceSubmitCtrl'
+        })
+        .state('root.service.approve', {
+            url: '/approve',
+            templateUrl: 'app/service/approve/template.html',
+            controller: 'serviceApproveCtrl',
             resolve: {
                 approvableHours: ['serviceService', function(serviceService) {
                     return serviceService.approvableHours();
                 }]
+            },
+            data: {
+                position: ['Service Chair']
             }
         })
         .state('root.admin', {
             url: '/admin',
             abstract: true,
             template: '<ui-view />',
-            controller: ['$scope', '$state', 'AuthStatus', adminCtrl],
-            resolve: {
-                AuthStatus: ['userService', function(userService) {
-                    return userService.authenticate();
-                }]
+            data: {
+                authStatus: ['admin']
             }
         })
         .state('root.admin.home', {
-            url: '/home',
-            templateUrl: 'app/admin/home/home.html',
-            controller: 'rootHomeCtrl',
+            url: '/',
+            templateUrl: 'app/admin/template.html',
+            controller: 'adminCtrl',
             resolve: {
                 brothers: ['brotherService', function(brotherService) {
                     return brotherService.getBrothers();
@@ -99,6 +85,5 @@
 
     angular.module('KDRPoints', [
         'ui.router',
-    ])
-    .config(['$stateProvider', '$urlRouterProvider', KDRPoints]);
+    ]).config(['$stateProvider', '$urlRouterProvider', KDRPoints]);
 }());
