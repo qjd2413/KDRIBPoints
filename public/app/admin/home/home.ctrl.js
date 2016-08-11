@@ -1,19 +1,21 @@
 
 (function() {
+    'use strict';
 
-  var rootHomeCtrl = function($scope, positionService, brothers, positions) {
-    $scope.positions = positions;
-    $scope.brothers = brothers;
-    $scope.new_position = {};
+    var rootHomeCtrl = function($scope, positionService, brothers, positions) {
+        $scope.positions = positions;
+        $scope.brothers = brothers;
+        $scope.newPosition = {};
 
-    $scope.submit = function() {
-      positionService.assign($scope.new_position.brother, $scope.new_position.position);
+        $scope.submit = function() {
+            var brother = $scope.newPosition.brother;
+            var position = $scope.newPosition.position;
+            positionService.assign(brother, position);
+        };
     };
-  }
 
-
-  angular.module('KDRPoints')
-    .controller('rootHomeCtrl', ['$scope', 'positionService', 'brothers', 'positions', rootHomeCtrl]);
-
-})();
+    angular.module('KDRPoints')
+    .controller('rootHomeCtrl', ['$scope', 'positionService',
+                                 'brothers', 'positions', rootHomeCtrl]);
+}());
 

@@ -1,17 +1,19 @@
-'use strict';
-
 var models = require('../../models');
 
-var Authorization = models.Authorization;
+(function() {
+    'use strict';
 
-var functions = {
-    // findAll
-    // returns <promise>:
-    //   every authorization stored in the database
-    findAll: function() {
-        return Authorization.findAll();
-    }
-};
+    var Authorization = models.Authorization;
 
-module.exports = functions;
+    var functions = {
 
+        // findAll
+        // returns <promise>:
+        //   every authorization stored in the database
+        findAll: function() {
+            return Authorization.findAll();
+        }
+    };
+
+    module.exports = functions;
+}());

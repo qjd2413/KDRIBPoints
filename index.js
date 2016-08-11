@@ -1,49 +1,53 @@
+var express = require('express');
+var session = require('express-session');
+var bodyParser = require('body-parser');
+var compress = require('compression');
+var glob = require('glob');
+var passport = require('passport');
+var Sequelize = require('sequelize');
+var SequelizeStore = require('connect-sequelize')(session);
+var cookieParser = require('cookie-parser');
+
+var config = require('./config/config');
+var logger = require('./app/util/logger');
+
 (function() {
-  'use strict';
+    'use strict';
 
-  var express = require('express');
-  var session = require('express-session');
-  var bodyParser = require('body-parser');
-  var compress = require('compression');
-  var glob = require('glob');
-  var passport = require('passport');
-  var Sequelize = require('sequelize');
-  var SequelizeStore = require('connect-sequelize')(session);
-  var cookieParser = require('cookie-parser');
+    var app = express();
 
-  var config = require('./config/config');
+    var db = new Sequelize(config.mysql.database, config.mysql.user,
+            config.mysql.pass, { logging: false });
 
-  var app = express();
+    // session store
+    app.use(cookieParser());
+    app.use(session(
+        {
+            secret: config.session.secret,
+            resave: false,
+            saveUninitialized: false,
+            store: new SequelizeStore(db, {}, 'user_sessions')
+        }
+    ));
+    app.use(passport.initialize());
+    app.use(passport.session());
 
-  var db = new Sequelize(config.mysql.database, config.mysql.user, 
-                         config.mysql.pass, { logging: false });
-  
-  //session store
-  app.use(cookieParser());
-  app.use(session(
-    { 
-      secret: config.session.secret,
-      resave: false, 
-      saveUninitialized: false,
-      store: new SequelizeStore(db, {}, 'user_sessions')
-    }
-  ));
-  app.use(passport.initialize());
-  app.use(passport.session());
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({
+        extended: true
+    }));
+    app.use(compress());
+    app.use(express.static(config.root + '/public'));
 
-  app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({
-    extended: true
-  }));
-  app.use(compress());
-  app.use(express.static(config.root + '/public'));
+    var routers = glob.sync(config.root + '/app/routers/*.js');
+    routers.forEach(function(router) {
+        /* eslint-disable global-require */
 
-  var routers = glob.sync(config.root + '/app/routers/*.js');
-  routers.forEach(function (router) {
-      require(router)(app);
-  });
+        require(router)(app);
 
-  app.listen(config.port);
-  console.log('Server listening on port', config.port);
+        /* eslint-enable */
+    });
 
-})();
+    app.listen(config.port);
+    logger.info('Server listening on port', config.port);
+}());

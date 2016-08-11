@@ -3,7 +3,7 @@
   Your profile is incomplete.<br />
   <form name="pinForm">
     Pin: #<input type="text" name="pin" ng-model="user.pin" ng-pattern="'\\d{1,3}'" maxlength="3" />
-    <div ng-show="pinForm.pin.$error.pattern || pin_error">
+    <div ng-show="pinForm.pin.$error.pattern || pinError">
       Invalid pin.
     </div>
   </form>

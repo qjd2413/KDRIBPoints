@@ -13,7 +13,7 @@ Points site for the Iota Beta chapter of Kappa Delta Rho
 7. Copy `config/template_config.js` to `config/config.js` and replace with your information.
 8. Create a new MySQL database called 'kdrpoints'
 9. `npm install` and `bower install`
-10. Install gulp globally-- `npm install -g gulp`.
+10. Install gulp and eslint globally-- `npm install -g gulp eslint`.
 11. Run `gulp` to start the server
 
 ### SysAdmin setup

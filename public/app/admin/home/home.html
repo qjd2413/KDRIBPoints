@@ -1,8 +1,8 @@
 
 <h1>Admin Panel</h1>
 
-<select ng-model="new_position.brother" ng-options="brother.lastName for brother in brothers track by brother.id"></select>
+<select ng-model="newPosition.brother" ng-options="brother.lastName for brother in brothers track by brother.id"></select>
 
-<select ng-model="new_position.position" ng-options="position.name for position in positions track by position.id"></select>
+<select ng-model="newPosition.position" ng-options="position.name for position in positions track by position.id"></select>
 
 <button ng-click="submit()">Assign</button>

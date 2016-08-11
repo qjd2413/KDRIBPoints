@@ -9,8 +9,8 @@
 * Avoid spelling mistakes, even in variable names.
 
 ## JavaScript
-JSHint should catch most of these errors. I suggest downloading a package for your editor that validates in real time (or on save, if your computer is slow)
-* ALWAYS `'use strict;'`
+ESLint should catch most of these errors. I suggest downloading a package for your editor that validates in real time (or on save, if your computer is slow)
+* ALWAYS `'use strict;'`, and always use the function form
 * Use semicolons, no exceptions
 * Single quotes preferred over double. `console.log('It\'s "quoted"');` looks better than `console.log("It's \"quoted\"');`, at least in my opinion.
 * Always use curly braces, and put the opening brace on the same line
@@ -82,6 +82,7 @@ angular.module('app').controller('controllerCtrl', controllerCtrl);
 var dependencies = ['$scope', '$http', ...];
 var controllerCtrl = function($scope, $http, ...) { ... };
 angular.module('app').controller('controllerCtrl', dependencies.push(controllerCtrl));
+```
 
 ### ui-router
 * Calls to services should be done in resolves if possible

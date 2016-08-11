@@ -1,30 +1,29 @@
 
 (function() {
+    'use strict';
+    var incompleteCtrl = function($scope, $state, userService) {
+        userService.getUser()
+            .then(function(user) {
+                $scope.user = user;
+            });
 
-  var incompleteCtrl = function($scope, $state, userService) {
-    userService.getUser()
-      .then(function(user) {
-        $scope.user = user;
-      });
-
-    $scope.submit = function() {
-      user = $scope.user;
-      if(user.pin && user.pin.toString().match(/\d{1,3}/)) {
-        userService.updateUser(user)
-          .then(function(success) {
-            if(success) {
-              $state.go('root.home')
+        $scope.submit = function() {
+            var user = $scope.user;
+            if(user.pin && user.pin.toString().match(/\d{1,3}/)) {
+                userService.updateUser(user)
+                    .then(function(success) {
+                        if(success) {
+                            $state.go('root.home');
+                        }
+                    });
+            } else {
+                $scope.pinError = true;
             }
-          });
-      } else {
-        $scope.pin_error = true;
-      }
+        };
     };
-  }
 
-
-  angular.module('KDRPoints')
-    .controller('incompleteCtrl', ['$scope', '$state', 'userService', incompleteCtrl]);
-
-})();
+    angular.module('KDRPoints')
+        .controller('incompleteCtrl', ['$scope', '$state',
+                'userService', incompleteCtrl]);
+}());
 
