@@ -1,13 +1,13 @@
 
 <div id="approve-service">
   <div ng-hide="done">
-    {{currentHour.Brother.firstName}} {{currentHour.Brother.lastName}} <br />
-    <div ng-show="currentHour.startTime">
-      {{currentHour.startTime}} - {{currentHour.endTime}} <br />
-    {{currentHour.duration}} <br />
+    {{nextServiceHour.Brother.firstName}} {{nextServiceHour.Brother.lastName}} <br />
+    <div ng-show="nextServiceHour.startTime">
+      {{nextServiceHour.startTime}} - {{nextServiceHour.endTime}} <br />
+    {{nextServiceHour.duration}} <br />
     </div>
-    <div ng-show="currentHour.amount">
-      {{currentHour.amount}}
+    <div ng-show="nextServiceHour.amount">
+      {{nextServiceHour.amount}}
     </div>
     <button ng-click="approve()">Approve</button>
     <button ng-click="skip()">Skip</button>

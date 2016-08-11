@@ -45,7 +45,7 @@
           var hour = req.body;
           //missing data
           var isHours = hour.startTime && hour.endTime;
-          var isDonation = hour.amount !== null;
+          var isDonation = hour.amount !== undefined;
           if(!hour.description || isHours === isDonation) {
             res.sendStatus(400);
             return;
@@ -53,14 +53,6 @@
           if(isDonation) {
             //remove extra data
             hour.startTime = hour.endTime = null;
-          } else {
-            //parse the dates
-            hour.startTime = new Date(hour.startTime);
-            hour.endTime = new Date(hour.endTime);
-            if(hour.startTime.toString() === 'Invalid Date' || hour.endTime.toString() === 'Invalid Date') {
-              res.sendStatus(400);
-              return;
-            }
           }
           serviceHours.submit(req.user, hour)
             .then(function() {
