@@ -5,7 +5,6 @@ var Sequelize = require('sequelize');
 
 var config = require('../config/config').mysql;
 var init = require('./init.js');
-var logger = require('../app/util/logger');
 
 (function() {
     'use strict';
@@ -15,8 +14,9 @@ var logger = require('../app/util/logger');
             );
     var db = {};
 
-    var processFiles = function(files) {
-        files.filter(function(file) {
+    /* eslint-disable no-sync */
+    fs.readdirSync(__dirname)
+        .filter(function(file) {
             return file.indexOf('.') !== 0 &&
                 file.indexOf('.js') !== -1 &&
                 file !== 'index.js' &&
@@ -27,16 +27,7 @@ var logger = require('../app/util/logger');
             db[model.name] = model;
         });
 
-        module.exports = db;
-    };
-
-    fs.readdir(__dirname, function(err, files) {
-        if(err) {
-            logger.err(err);
-            return;
-        }
-        processFiles(files);
-    });
+    /* eslint-enable */
 
     Object.keys(db).forEach(function(modelName) {
         if('associate' in db[modelName]) {
@@ -50,4 +41,6 @@ var logger = require('../app/util/logger');
 
     db.sequelize = sequelize;
     db.Sequelize = Sequelize;
+
+    module.exports = db;
 }());

@@ -14,17 +14,17 @@ var config = require('../../config/config').oauth;
     var router = express.Router();
 
     passport.use(
-            new GoogleStrategy({
-                clientID: config.clientId,
-                clientSecret: config.clientSecret,
-                callbackURL: config.callback
-            },
-            function(accessToken, refreshToken, profile, cb) {
-                logger.info(profile.displayName, 'has signed in.');
-                userCtrl.signIn(profile.id, profile.name, profile.emails);
-                return cb(null, profile.id);
-            })
-            );
+        new GoogleStrategy({
+            clientID: config.clientId,
+            clientSecret: config.clientSecret,
+            callbackURL: config.callback
+        },
+        function(accessToken, refreshToken, profile, cb) {
+            logger.info(profile.displayName, 'has signed in.');
+            userCtrl.signIn(profile.id, profile.name, profile.emails);
+            return cb(null, profile.id);
+        })
+    );
 
     passport.serializeUser(function(user, cb) {
         cb(null, user);
@@ -38,7 +38,7 @@ var config = require('../../config/config').oauth;
         app.use('/user', router);
 
         router.get('/sign_in', function(req, res) {
-            if(!req.user) {
+            if(req.user) {
                 logger.warn('User', req.user, 'already logged in.');
                 res.redirect('/');
                 return;

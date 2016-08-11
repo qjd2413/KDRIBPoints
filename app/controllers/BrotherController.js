@@ -69,7 +69,7 @@ var userCtrl = require('./UserController');
                 }
                 info.positions = lodash.map(brother.Positions,
                                             'dataValues.name');
-                info.authorization = resp[1];
+                info.authStatus = resp[1];
                 return info;
             });
         }

@@ -12,13 +12,15 @@ var eslint = require('gulp-eslint');
     var bowerFiles = mainBowerFiles('**/*.js');
     var angularFiles = './public/app/**/*.js';
     var serverFiles = './app/**/.*.js';
-    var jsFiles = [angularFiles, serverFiles];
+    var configFile = './config/config.js';
+    var dbFiles = './models/*.js';
+    var jsFiles = [angularFiles, serverFiles, configFile, dbFiles];
     var appFiles = bowerFiles.concat(angularFiles);
     var cssFiles = './public/css/**/*.css';
 
     // inject script and link tags
     gulp.task('inject', ['hint'], function() {
-        return gulp.src('public/index.html')
+        return gulp.src('./public/index.html')
           .pipe(inject(gulp.src(appFiles), { relative: true }))
           .pipe(inject(gulp.src(cssFiles), { relative: true }))
           .pipe(gulp.dest('./public/'));
@@ -31,6 +33,7 @@ var eslint = require('gulp-eslint');
             .pipe(eslint.format())
             .pipe(eslint.failAfterError());
     });
+
 
     // automatically restart the server if js files change
     gulp.task('start', ['inject'], function() {
