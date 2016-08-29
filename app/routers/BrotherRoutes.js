@@ -8,6 +8,12 @@ var brotherCtrl = require('../controllers/BrotherController');
 
     var router = express.Router();
 
+    var statusCodes = {
+        success: 200,
+        badRequest: 400,
+        unauthed: 403
+    };
+
     var routes = function(app) {
         app.use('/brother', router);
 
@@ -30,12 +36,12 @@ var brotherCtrl = require('../controllers/BrotherController');
 
         router.post('/update', function(req, res) {
             if(!req.user) {
-                res.sendStatus(403);
+                res.sendStatus(statusCodes.unauthed);
                 return;
             }
 
             if(!req.body || !req.body.id) {
-                res.sendStatus(400);
+                res.sendStatus(statusCodes.badRequest);
                 return;
             }
 
@@ -48,7 +54,7 @@ var brotherCtrl = require('../controllers/BrotherController');
             brotherCtrl.update(req.body, req.body.id)
                 .then(function() {
                     logger.info(req.user, 'updated');
-                    res.sendStatus(200);
+                    res.sendStatus(statusCodes.success);
                 });
         });
     };

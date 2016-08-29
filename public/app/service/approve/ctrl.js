@@ -2,7 +2,6 @@
 (function() {
     'use strict';
 
-    var dependencies = ['$scope', 'serviceService', 'approvableHours'];
     var ctrl = function($scope, serviceService, approvableHours) {
         $scope.done = approvableHours.length === 0;
         $scope.nextServiceHour = approvableHours.shift();
@@ -26,6 +25,6 @@
     };
 
     angular.module('KDRPoints')
-    .controller('serviceApproveCtrl', dependencies.concat(ctrl));
+    .controller('serviceApproveCtrl', ctrl);
 }());
 

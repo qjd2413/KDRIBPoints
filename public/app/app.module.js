@@ -85,5 +85,5 @@
 
     angular.module('KDRPoints', [
         'ui.router',
-    ]).config(['$stateProvider', '$urlRouterProvider', KDRPoints]);
+    ]).config(KDRPoints);
 }());

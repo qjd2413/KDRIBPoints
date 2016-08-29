@@ -9,6 +9,12 @@ var userCtrl = require('../controllers/UserController');
 
     var router = express.Router();
 
+    var statusCodes = {
+        success: 200,
+        badRequest: 400,
+        unauthed: 403
+    };
+
     var routes = function(app) {
         app.use('/position', router);
 
@@ -20,25 +26,25 @@ var userCtrl = require('../controllers/UserController');
 
         router.post('/assign', function(req, res) {
             if(!req.user) {
-                res.sendStatus(403);
+                res.sendStatus(statusCodes.unauthed);
                 return;
             }
             if(!req.body || !req.body.brother || !req.body.position) {
-                res.sendStatus(400);
+                res.sendStatus(statusCodes.badRequest);
                 return;
             }
             userCtrl.authorization(req.user)
                 .then(function(auth) {
                     if(auth !== 'sysadmin' && auth !== 'eboard') {
                         logger.warn(req.user, 'attempted to assign a position');
-                        res.sendStatus(403);
+                        res.sendStatus(statusCodes.unauthed);
                         return;
                     }
                     positionCtrl.assign(req.body.brother, req.body.position)
                         .then(function() {
                             logger.info(req.body.brother, 'assigned to',
                                         req.body.position);
-                            res.sendStatus(200);
+                            res.sendStatus(statusCodes.success);
                         });
                 });
         });

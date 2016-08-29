@@ -37,5 +37,5 @@
     };
 
     angular.module('KDRPoints')
-        .factory('serviceService', ['httpService', serviceService]);
+        .factory('serviceService', serviceService);
 }());

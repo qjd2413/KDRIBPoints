@@ -11,5 +11,5 @@
     };
 
     angular.module('KDRPoints')
-        .factory('brotherService', ['httpService', brotherService]);
+        .factory('brotherService', brotherService);
 }());

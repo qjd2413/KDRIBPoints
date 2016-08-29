@@ -26,7 +26,8 @@ var config = require('../../config/config.js').logger;
             var today = new Date().toLocaleDateString();
             fs.readFile(config.file, 'utf8', function(err, content) {
                 if(err) {
-                    if(err.errno === -2) {
+                    var fileNotFound = -2;
+                    if(err.errno === fileNotFound) {
                         // file DNE, prepend date
                         string = today + '\n' + string;
                     } else {

@@ -2,7 +2,6 @@
 (function() {
     'use strict';
 
-    var dependencies = ['$scope', '$state', 'userService'];
     var ctrl = function($scope, $state, userService) {
         userService.getUser()
             .then(function(user) {
@@ -25,6 +24,6 @@
     };
 
     angular.module('KDRPoints')
-        .controller('incompleteCtrl', dependencies.concat(ctrl));
+        .controller('incompleteCtrl', ctrl);
 }());
 
