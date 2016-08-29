@@ -1,0 +1,14 @@
+<div class="date-input">
+   <select ng-model="date.month" ng-options="s_month.id as s_month.name for s_month in months" ng-change="changeFunction()" >
+  </select>
+  <input type="number" ng-model="date.day" placeholder="Day" max="31" ng-change="changeFunction()" />
+  <input type="number" ng-model="date.year" placeholder="Year" max="2020" ng-change="changeFunction()" /><br />
+  <input type="text" ng-model="date.hour" maxlength="2" ng-change="changeFunction()" />
+  :
+  <input type="text" ng-model="date.min" maxlength="2" ng-change="changeFunction()" />
+  <select ng-model="date.cycle" ng-change="changeFunction()" >
+    <option value="AM">AM</option>
+    <option value="PM">PM</option>
+  </select>
+</div>
+

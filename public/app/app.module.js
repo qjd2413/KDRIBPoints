@@ -102,6 +102,7 @@
 
     angular.module('KDRPoints', [
         'ui.router',
+        '720kb.datepicker'
     ])
     .config(['$stateProvider', '$urlRouterProvider', KDRPoints]);
 })();
