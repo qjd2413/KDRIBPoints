@@ -85,5 +85,6 @@
 
     angular.module('KDRPoints', [
         'ui.router',
+        '720kb.datepicker'
     ]).config(KDRPoints);
 }());

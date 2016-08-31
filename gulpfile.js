@@ -4,7 +4,6 @@ var gulp = require('gulp');
 var autoprefixer = require('gulp-autoprefixer');
 var argv = require('yargs').argv;
 var bowerMain = require('bower-main');
-var buddy = require('gulp-buddy.js');
 var changed = require('gulp-changed');
 var concat = require('gulp-concat');
 var cssnano = require('gulp-cssnano');
@@ -33,8 +32,8 @@ var logger = require('./app/util/logger');
     var jsFiles = [angularFiles, './config/config.js', './app/**/*.js'];
 
     var movedFiles = [
-        './config/*.js', 'index.js', './app/**/*.js',
-        './node_modules/**/*.js', './models/**/*'
+        './config/config.js', './app/**/*.js', './models/**/*', './index.js',
+        './node_modules/**/*.js', './node_modules/**/*.json'
     ];
     if(prod) {
         logger.info('Prod Build');
@@ -50,10 +49,10 @@ var logger = require('./app/util/logger');
     });
 
     gulp.task('move', ['clean'], function() {
-        return gulp.src(movedFiles, { base: '.', read: false })
+        return gulp.src(movedFiles, { base: '.' })
             .pipe(ignore(/gulp/))
-            .pipe(changed('dist'))
-            .pipe(gulp.dest('dist'));
+            .pipe(changed('./dist'))
+            .pipe(gulp.dest('./dist'));
     });
 
     gulp.task('html', ['clean'], function() {
@@ -109,21 +108,15 @@ var logger = require('./app/util/logger');
     // run app files through jshint
     gulp.task('hint', function() {
         return gulp.src(jsFiles)
-            .pipe(buddy({ reporter: 'detailed' }))
             .pipe(eslint())
             .pipe(eslint.format())
             .pipe(eslint.failAfterError());
     });
     gulp.watch(jsFiles, ['inject']);
 
-    // automatically restart the server if js files change
     gulp.task('start', ['inject', 'move', 'img'], function() {
-        var script = 'index.js';
-        if(prod) {
-            script = './dist/index.js';
-        }
         nodemon({
-            script: script,
+            script: './dist/index.js',
             ext: 'js'
         });
     });
