@@ -3,18 +3,22 @@ html {
     height: 100%;
 }
 
+
 body {
   padding: 0;
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
   margin: 0;
   height: 100%;
   background-color: #205f8c;
-}
+  font: 100% Lato, sans-serif;
+ }
 
 .content-wrapper {
-  margin: 0 20px;
-  background-color: #ddd;
-  color: #000;
+  margin: 0 auto;
+  background-color: #edf2f4;
+  font-weight: thin;
+  color: #3b4a3c;
   padding: 30px;
   height:auto;
+
 }

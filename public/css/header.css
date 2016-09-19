@@ -2,8 +2,12 @@
 #header {
   width: 100%;
   background-image: url("/img/header/banner.jpg");
+  background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
+  font: 100% Lato, sans-serif;
+  font-weight: bold;
+  font-size: 1.2em;
 }
 
 #header-crest {
