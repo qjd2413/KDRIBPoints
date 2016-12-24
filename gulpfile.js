@@ -16,6 +16,7 @@ var imagemin = require('gulp-imagemin');
 var inject = require('gulp-inject');
 var ngAnnotate = require('gulp-ng-annotate');
 var nodemon = require('gulp-nodemon');
+var NpmAutoInstall = require('npm-auto-install');
 var series = require('stream-series');
 var uglify = require('gulp-uglify');
 
@@ -48,7 +49,20 @@ var logger = require('./app/util/logger');
         return del(cleanFiles);
     });
 
-    gulp.task('move', ['clean'], function() {
+    // auto-[un]install node packages
+    gulp.task('nai', function() {
+        return new NpmAutoInstall()
+            .detectMissing(
+                process.cwd(),
+                {
+                    install: true,
+                    uninstall: true,
+                    force: true
+                }
+            );
+    });
+
+    gulp.task('move', ['clean', 'nai'], function() {
         return gulp.src(movedFiles, { base: '.' })
             .pipe(ignore(/gulp/))
             .pipe(changed('./dist'))
@@ -112,7 +126,6 @@ var logger = require('./app/util/logger');
             .pipe(eslint.format())
             .pipe(eslint.failAfterError());
     });
-    gulp.watch(jsFiles, ['inject']);
 
     gulp.task('start', ['inject', 'move', 'img'], function() {
         nodemon({

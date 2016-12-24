@@ -114,7 +114,7 @@ var exec = require('child_process').exec;
 
     var readTemplateFile = function() {
         var deferred = q.defer();
-        fs.readFile('./config/template_config.js', 'utf8', function(err, data) {
+        fs.readFile('./config/config.temp', 'utf8', function(err, data) {
             if(err) {
                 deferred.reject(err);
                 return;
