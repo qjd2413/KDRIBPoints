@@ -14,8 +14,10 @@ var htmlmin = require('gulp-htmlmin');
 var ignore = require('gulp-ignore');
 var imagemin = require('gulp-imagemin');
 var inject = require('gulp-inject');
+var install = require('gulp-install');
 var ngAnnotate = require('gulp-ng-annotate');
 var nodemon = require('gulp-nodemon');
+var NpmAutoInstall = require('npm-auto-install');
 var series = require('stream-series');
 var uglify = require('gulp-uglify');
 
@@ -33,7 +35,7 @@ var logger = require('./app/util/logger');
 
     var movedFiles = [
         './config/config.js', './app/**/*.js', './models/**/*', './index.js',
-        './node_modules/**/*.js', './node_modules/**/*.json'
+        './package.json'
     ];
     if(prod) {
         logger.info('Prod Build');
@@ -48,11 +50,31 @@ var logger = require('./app/util/logger');
         return del(cleanFiles);
     });
 
-    gulp.task('move', ['clean'], function() {
+    // auto-[un]install node packages
+    gulp.task('nai', function() {
+        return new NpmAutoInstall()
+            .detectMissing(
+                process.cwd(),
+                {
+                    install: false,
+                    uninstall: false,
+                    force: false,
+                    ignore: 'dist/node_modules/**'
+                }
+            );
+    });
+
+    gulp.task('move', ['clean', 'nai'], function() {
         return gulp.src(movedFiles, { base: '.' })
             .pipe(ignore(/gulp/))
             .pipe(changed('./dist'))
             .pipe(gulp.dest('./dist'));
+    });
+
+    gulp.task('install', ['clean', 'move'], function() {
+        return gulp.src('./dist/package.json')
+            .pipe(gulp.dest('./dist'))
+            .pipe(install({ production: true }));
     });
 
     gulp.task('html', ['clean'], function() {
@@ -112,9 +134,8 @@ var logger = require('./app/util/logger');
             .pipe(eslint.format())
             .pipe(eslint.failAfterError());
     });
-    gulp.watch(jsFiles, ['inject']);
 
-    gulp.task('start', ['inject', 'move', 'img'], function() {
+    gulp.task('start', ['inject', 'move', 'img', 'install'], function() {
         nodemon({
             script: './dist/index.js',
             ext: 'js'
