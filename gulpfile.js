@@ -14,6 +14,7 @@ var htmlmin = require('gulp-htmlmin');
 var ignore = require('gulp-ignore');
 var imagemin = require('gulp-imagemin');
 var inject = require('gulp-inject');
+var install = require('gulp-install');
 var ngAnnotate = require('gulp-ng-annotate');
 var nodemon = require('gulp-nodemon');
 var NpmAutoInstall = require('npm-auto-install');
@@ -34,7 +35,7 @@ var logger = require('./app/util/logger');
 
     var movedFiles = [
         './config/config.js', './app/**/*.js', './models/**/*', './index.js',
-        './node_modules/**/*.js', './node_modules/**/*.json'
+        './package.json'
     ];
     if(prod) {
         logger.info('Prod Build');
@@ -55,9 +56,10 @@ var logger = require('./app/util/logger');
             .detectMissing(
                 process.cwd(),
                 {
-                    install: true,
-                    uninstall: true,
-                    force: true
+                    install: false,
+                    uninstall: false,
+                    force: false,
+                    ignore: 'dist/node_modules/**'
                 }
             );
     });
@@ -67,6 +69,12 @@ var logger = require('./app/util/logger');
             .pipe(ignore(/gulp/))
             .pipe(changed('./dist'))
             .pipe(gulp.dest('./dist'));
+    });
+
+    gulp.task('install', ['clean', 'move'], function() {
+        return gulp.src('./dist/package.json')
+            .pipe(gulp.dest('./dist'))
+            .pipe(install({ production: true }));
     });
 
     gulp.task('html', ['clean'], function() {
@@ -127,7 +135,7 @@ var logger = require('./app/util/logger');
             .pipe(eslint.failAfterError());
     });
 
-    gulp.task('start', ['inject', 'move', 'img'], function() {
+    gulp.task('start', ['inject', 'move', 'img', 'install'], function() {
         nodemon({
             script: './dist/index.js',
             ext: 'js'
